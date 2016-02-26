@@ -80,7 +80,7 @@ Server:
 
 **Success**
 
-**[NOTE 01]** This is the current Docker version, 1.10.1, but this should not cause any issues. 
+**[NOTE 01]** This is not the current Docker version, 1.10.1, but this should not cause any issues. 
 
 ###(8) Verify Docker is installed correctly:
 
