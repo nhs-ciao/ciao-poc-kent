@@ -1,0 +1,11 @@
+input
+{ 
+  syslog { } 
+}
+output 
+{
+  elasticsearch 
+  { 
+    hosts => ["localhost:9200"]
+  }
+}

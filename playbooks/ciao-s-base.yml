@@ -1,0 +1,264 @@
+---
+# CIAO singleton base services
+#
+
+- name: Deploy ansible docker issues workaround
+  hosts: all
+  become: True
+  tasks:
+    - name: Install python pip
+      apt: name=python-pip state=present update_cache=yes cache_valid_time=3600
+    - name: Install docker-py as a workaround for Ansible issue
+      pip: name=docker-py state=latest
+
+- name: Deploy Nagios
+  hosts: all
+  become: True
+  vars:
+    nagios_config_directory: "/opt/ciao_nagios/etc"
+    nagios_config_commands_directory: "/opt/ciao_nagios/etc/commands"
+    nagios_config_timeperiods_directory: "/opt/ciao_nagios/etc/timeperiods"
+    nagios_config_contacts_directory: "/opt/ciao_nagios/etc/contacts"
+  vars_files:
+    - ciao-s-base-vars.yml 
+  tasks:
+    - name: Create Nagios configuration directory
+      file: path={{ nagios_config_directory }} state=directory
+    - name: Create Nagios configuration commands sub-directory
+      file: path={{ nagios_config_commands_directory }} state=directory
+    - name: Create Nagios configuration timeperiods sub-directory
+      file: path={{ nagios_config_timeperiods_directory }} state=directory
+    - name: Create Nagios configuration contacts sub-directory
+      file: path={{ nagios_config_contacts_directory }} state=directory
+    - name: Create Nagios configuration hosts sub-directory
+      file: path={{ nagios_config_hosts_directory }} state=directory
+    - name: Create Nagios configuration services sub-directory
+      file: path={{ nagios_config_services_directory }} state=directory
+    - name: Install nagios.cfg
+      copy: src=files/nagios.etc/nagios.cfg dest={{ nagios_config_directory }}/nagios.cfg
+    - name: Install resource.cfg
+      copy: src=files/nagios.etc/resource.cfg dest={{ nagios_config_directory }}/resource.cfg
+    - name: Install templates.cfg
+      copy: src=files/nagios.etc/templates.cfg dest={{ nagios_config_directory }}/templates.cfg
+    - name: Install cgi.cfg
+      copy: src=files/nagios.etc/cgi.cfg dest={{ nagios_config_directory }}/cgi.cfg
+    - name: Install commands.cfg
+      copy: src=files/nagios.etc/commands.cfg dest={{ nagios_config_commands_directory }}/commands.cfg
+    - name: Install timeperiods.cfg
+      copy: src=files/nagios.etc/timeperiods.cfg dest={{ nagios_config_timeperiods_directory }}/timeperiods.cfg
+    - name: Install contacts.cfg
+      copy: src=files/nagios.etc/contacts.cfg dest={{ nagios_config_contacts_directory }}/contacts.cfg
+    - name: Install Nagios
+      docker:
+        name: ciao-nagios
+        image: tpires/nagios
+        state: "{{ docker_state }}"
+        restart_policy: always
+        ports:
+        - "8081:80"
+        volumes:
+        - "{{ nagios_config_directory }}:/opt/nagios/etc"
+
+- name: Deploy Nagios host and service configurations for monitoring
+  hosts: all
+  become: True
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Install host configurations for host in the CIAO cloud
+      template: src=templates/host.cfg.j2 dest={{ nagios_config_hosts_directory }}/{{ inventory_hostname }}.cfg
+    - name: Install service configurations for host in the CIAO cloud
+      template: src=templates/service.cfg.j2 dest={{ nagios_config_services_directory }}/{{ inventory_hostname }}.cfg
+
+- name: Deploy ELK
+  hosts: all
+  become: True
+  vars:
+    logstash_config_directory: "/opt/ciao_logstash/conf"
+    elastic_data_directory: "/opt/ciao_elastic/data" 
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Create Logstash configuration directory
+      file: path={{ logstash_config_directory }} state=directory
+    - name: Create Elastic data directory
+      file: path={{ elastic_data_directory }} state=directory
+    - name: Install Logstash configuration file
+      template: src=templates/logstash.conf.j2 dest={{ logstash_config_directory }}/logstash.conf
+    - name: Install ELK stack
+      docker:
+        name: ciao-elk
+        image: hscic/ciao-elk
+        state: "{{ docker_state }}"
+        restart_policy: always
+        ports:
+        - "{{ kibana_port }}:80"
+        - "{{ logstash_port }}:514"
+        - "{{ elastic_port }}:9200"
+        volumes:
+        - "{{ logstash_config_directory }}:/etc/logstash"
+        - "{{ elastic_data_directory }}:/data"
+
+- name: Deploy Nagios service configurations for monitoring ELK
+  hosts: all
+  become: True
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Install service configurations for host running logstash
+      template: src=templates/logstash.cfg.j2 dest={{ nagios_config_services_directory }}/{{ inventory_hostname }}-logstash.cfg
+    - name: Install service configurations for host running elastic
+      template: src=templates/elastic.cfg.j2 dest={{ nagios_config_services_directory }}/{{ inventory_hostname }}-elastic.cfg
+    - name: Install service configurations for host running kibana
+      template: src=templates/kibana.cfg.j2 dest={{ nagios_config_services_directory }}/{{ inventory_hostname }}-kibana.cfg
+
+- name: Deploy etcd Browser
+  hosts: all
+  become: True
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Install etcd browser
+      docker:
+        name: ciao-etcdbrowser
+        image: buddho/etcd-browser
+        state: "{{ docker_state }}"
+        restart_policy: always
+        ports:
+        - "{{ etcd_browser_port }}:8000"
+
+- name: Deploy Nagios service configurations for monitoring etcd Browser
+  hosts: all
+  become: True
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Install service configuration for host running etcd Browser
+      template: src=templates/etcdbrowser.cfg.j2 dest={{ nagios_config_services_directory }}/{{ inventory_hostname }}-etcdbrowser.cfg
+
+- name: Deploy Logspout
+  hosts: all
+  become: True
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Install Logspout
+      docker:
+        name: ciao-logspout
+        image: gliderlabs/logspout
+        state: "{{ docker_state }}"
+        restart_policy: always
+        command: "syslog://{{ ansible_default_ipv4.address }}:514"
+        ports:
+        - "{{ logspout_port }}:8000"
+        volumes:
+        - "/var/run/docker.sock:/tmp/docker.sock"
+
+- name: Deploy Nagios service configurations for monitoring logspout
+  hosts: all
+  become: True
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Install service configurations for host running logspout
+      template: src=templates/logspout.cfg.j2 dest={{ nagios_config_services_directory }}/{{ inventory_hostname }}-logspout.cfg
+
+- name: Deploy etcd
+  hosts: all
+  become: True
+  vars:
+    etcd_cluster: "etcd-{{ inventory_hostname }}=http://{{ ansible_default_ipv4.address }}:2380"
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Install etcd
+      docker:
+        name: ciao-etcd
+        image: quay.io/coreos/etcd:v2.0.8
+        state: "{{ docker_state }}"
+        restart_policy: always
+        ports:
+        - "{{ etcd_port }}:4001"
+        - "2380:2380"
+        - "2379:2379"
+        env:
+          ETCD_NAME: etcd-{{ inventory_hostname }}
+          ETCD_INITIAL_ADVERTISE_PEER_URLS: http://{{ ansible_default_ipv4.address }}:2380
+          ETCD_ADVERTISE_CLIENT_URLS: http://{{ ansible_default_ipv4.address }}:2379,http://{{ ansible_default_ipv4.address }}:4001
+          ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379,http://0.0.0.0:4001
+          ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+          ETCD_INITIAL_CLUSTER_TOKEN: etcd-cluster-ciao
+          ETCD_INITIAL_CLUSTER: "{{ etcd_cluster }}"
+          ETCD_INITIAL_CLUSTER_STATE: new 
+
+- name: Deploy Nagios service configurations for monitoring etcd
+  hosts: all
+  become: True
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Install service configurations for host running etcd
+      template: src=templates/etcd.cfg.j2 dest={{ nagios_config_services_directory }}/{{ inventory_hostname }}-etcd.cfg
+
+- name: Deploy ActiveMQ
+  hosts: all
+  become: True
+  vars:
+    activemq_broker_name: "CiaoBroker"
+    activemq_config_directory: "/opt/ciao_activemq/conf"
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Create ActiveMQ configuration directory
+      file: path={{ activemq_config_directory }} state=directory
+    - name: Install broker configuration file
+      template: src=templates/activemq-s.xml.j2 dest={{ activemq_config_directory }}/activemq.xml
+    - name: Install other configuration files
+      copy: src=files/activemq.conf/{{ item }} dest={{ activemq_config_directory }}/{{ item }}
+      with_items:
+        - log4j.properties
+        - broker.ks
+        - broker.ts
+        - broker-localhost.cert
+        - client.ks
+        - client.ts
+        - credentials.properties
+        - credentials-enc.properties
+        - groups.properties
+        - jetty.xml
+        - jetty-realm.properties
+        - jmx.access
+        - jmx.password
+        - logging.properties
+        - login.config
+        - users.properties
+    - name: Install ActiveMQ
+      docker:
+        name: ciao-activemq
+        image: hscic/ciao-activemq
+        state: "{{ docker_state }}"
+        restart_policy: always
+        ports:
+        - "{{ amqconsole_port }}:8161"
+        - "61616:61616"
+        - "61619:61619"
+        volumes:
+        - "{{ activemq_config_directory }}:/opt/activemq/conf"
+
+- name: Deploy Nagios service configurations for monitoring ActiveMQ
+  hosts: all
+  become: True
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Install service configurations for host running ActiveMQ Web Console
+      template: src=templates/amqconsole.cfg.j2 dest={{ nagios_config_services_directory }}/{{ inventory_hostname }}-amqconsole.cfg
+
+- name: Restart Nagios
+  hosts: all
+  become: True
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Restart Nagios
+      command: "docker restart ciao-nagios"

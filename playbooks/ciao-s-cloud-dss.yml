@@ -1,0 +1,6 @@
+---
+# CIAO Discharge Summary via Spine cloud deployment
+# Singleton deployment
+#
+- include: ciao-s-base.yml
+- include: ciao-s-app-dss.yml

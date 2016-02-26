@@ -1,0 +1,14 @@
+---
+# Empty docker
+#
+
+- name: Empty docker on hosts
+  hosts: all
+  become: True
+  tasks:
+    - name: Stop all Docker containers
+      shell: docker stop $(docker ps -q)
+    - name: Remove all Docker containers
+      shell: docker rm $(docker ps -a -q)
+    - name: Remove all Docker images
+      shell: docker rmi $(docker images -q)

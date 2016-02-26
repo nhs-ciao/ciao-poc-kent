@@ -1,0 +1,18 @@
+---
+# CIAO singleton base config variables
+#
+docker_state: "started"
+nagios_config_hosts_directory: "/opt/ciao_nagios/etc/hosts"
+nagios_config_services_directory: "/opt/ciao_nagios/etc/services"
+elastic_port: "9200"
+kibana_port: "8080"
+logstash_port: "514"
+etcd_browser_port: "7999"
+logspout_port: "8000"
+etcd_port: "4001"
+etcd_url: "http://localhost:4001"
+etcd_root: "{{ etcd_url }}/v2/keys/ciao/"
+amqconsole_port: "8161"
+activemq_username: "ciao"
+activemq_password: "ciao"
+activemq_transport: "tcp://{{ ansible_default_ipv4.address }}:61616"

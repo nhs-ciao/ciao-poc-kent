@@ -1,0 +1,14 @@
+---
+# CIAO App Discharge Summary via Spine config variables
+# Singleton deployment
+#
+
+completed_folder: "/opt/ciao/completed"
+input_folder: "/opt/ciao/input"
+error_folder: "/opt/ciao/error"
+inprogress_folder: "/opt/ciao/in-progress"
+
+parser_out_q: "parsed-documents"
+enricher_out_q: "enriched-documents"
+builder_out_q: "cda-documents"
+transformer_out_q: "transformed-documents"

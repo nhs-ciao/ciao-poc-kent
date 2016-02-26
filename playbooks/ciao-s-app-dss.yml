@@ -1,0 +1,388 @@
+---
+# Ciao app for send discharge summary via spine
+# Singleton deployment
+# Assumes ciao-s-base.yml is run first
+#
+
+- name: Deploy ciao-docs-finalizer
+  hosts: all
+  become: True
+  vars:
+    cip_name: "ciao-docs-finalizer"
+    cip_version: "1.0.0-SNAPSHOT"
+    etcd_path: "{{ etcd_root }}{{ cip_name }}/{{ cip_version }}/"
+  vars_files:
+    - ciao-s-base-vars.yml
+    - ciao-s-app-dss-vars.yml
+  tasks:
+    - name: Set configuration items in etcd
+      shell: curl {{ etcd_path }}{{ item.key }} -XPUT -d value="{{ item.value }}"
+      run_once: true
+      with_items:
+        - { key: 'configured', value: 'true' }
+        - { key: 'camel.log.mdc', value: 'true' }
+        - { key: 'camel.log.trace', value: 'false' }
+        - { key: 'camel.log.debugStreams', value: 'false' }
+        - { key: 'processorConfig', value: 'default' }
+        - { key: 'repositoryConfig', value: 'memory' } 
+        - { key: 'inProgressFolderPollPeriod', value: '500' }
+        - { key: 'inProgressFolder', value: '/opt/ciao-docs-finalizer/in-progress' }
+        - { key: 'documentPreparationTimeout', value: '60000' }
+        - { key: 'documentSendTimeout', value: '18000' }
+        - { key: 'infResponseTimeout', value: '300000' }
+        - { key: 'busResponseTimeout', value: '17280000' }
+        - { key: 'idempotentActions', value: 'true' }
+        - { key: 'actions', value: 'to=SUCCEEDED > MoveToCompletedFolder\nto=FAILED > MoveToErrorFolder' }
+    - name: Install ciao-docs-finalizer
+      docker:
+        name: ciao-docs-finalizer
+        image: hscic/ciao-docs-finalizer
+        state: "{{ docker_state }}"
+        restart_policy: always
+        ports:
+# Placeholder for potential JMX port
+#        - "8778:8778"
+        env:
+          CIAO_ETCD_URL: http://{{ ansible_default_ipv4.address }}:4001
+        volumes:
+        - "{{ completed_folder }}:/opt/ciao-docs-finalizer/completed"
+        - "{{ error_folder }}:/opt/ciao-docs-finalizer/error"
+        - "{{ inprogress_folder }}:/opt/ciao-docs-finalizer/in-progress"
+
+- name: Deploy ciao-transport-dts
+  hosts: all
+  become: True
+  vars:
+    cip_name: "ciao-transport-dts"
+    cip_version: "1.0.0-SNAPSHOT"
+    etcd_path: "{{ etcd_root }}{{ cip_name }}/{{ cip_version }}/"
+    dts_folder: "/opt/dts"
+    ciao_folder: "/opt/ciao-trasnsport-dts"
+  vars_files:
+    - ciao-s-base-vars.yml
+    - ciao-s-app-dss-vars.yml
+  tasks:     
+    - name: Set configuration items in etcd
+      shell: curl {{ etcd_path }}{{ item.key }} -XPUT -d value="{{ item.value }}"
+      run_once: true
+      with_items:
+        - { key: 'configured', value: 'true' }
+        - { key: 'camel.log.mdc', value: 'true' }
+        - { key: 'camel.log.trace', value: 'false' }
+        - { key: 'camel.log.debugStreams', value: 'false' }
+        - { key: 'processorConfig', value: 'default' }
+        - { key: 'messagingConfig', value: 'activemq' }
+        - { key: 'repositoryConfig', value: 'memory' }
+        - { key: 'addressingConfig', value: 'static' }
+        - { key: 'activemq.brokerURL', value: '{{ activemq_transport }}' }
+        - { key: 'activemq.userName', value: '{{ activemq_username }}' }
+        - { key: 'activemq.password', value: '{{ activemq_password }}' }
+        - { key: 'jms.concurrentConsumers', value: '20' } 
+        - { key: 'addressing.staticFiles', value: '' }
+        - { key: 'senderODSCode', value: '!REQUIRED!' } 
+        - { key: 'auditODSCode', value: '!OPTIONAL!' } 
+        - { key: 'senderItkService', value: 'urn:nhs-itk:services:201005:sendDistEnvelope' } 
+        - { key: 'itkDocumentSenderQueue', value: 'cda-documents' } 
+        - { key: 'distributionEnvelopeReceiverQueue', value: 'distribution-envelope-receiver' } 
+        - { key: 'itkMessageReceiverQueue', value: 'itk-message-receiver' } 
+        - { key: 'dts.rootFolder', value: '/opt/ciao-transport-dts/dts' } 
+        - { key: 'dts.temporaryFolder', value: '/opt/ciao-transport-dts/dts-temp' } 
+        - { key: 'dts.filePrefix', value: '!REQUIRED!' } 
+        - { key: 'dts.workflowId', value: 'TOC_DISCH_DMS' } 
+        - { key: 'dts.senderMailbox', value: '!REQUIRED!' } 
+        - { key: 'dts.receiverWorkflowIds', value: 'TOC_DISCH_DMS_ACK' } 
+        - { key: 'dts.errorFolder', value: '/opt/ciao-transport-dts/dts-error' } 
+        - { key: 'dts.completedFolder', value: '/opt/ciao-transport-dts/dts-completed' } 
+        - { key: 'inProgressFolder', value: '/opt/ciao-transport-dts/in-progress' }
+    - name: Install ciao-transport-dts
+      docker:
+        name: ciao-transport-dts
+        image: hscic/ciao-transport-dts
+        state: "{{ docker_state }}"
+        restart_policy: always
+        ports:
+# Placeholder for potential JMX port
+#        - "8778:8778"
+        env:
+          CIAO_ETCD_URL: http://{{ ansible_default_ipv4.address }}:4001
+        volumes:
+        - "{{ inprogress_folder }}:/opt/ciao-transport-dts/in-progress"
+        - "{{ dts_folder }}:/opt/dts"
+        - "{{ ciao_folder }}:/opt/ciao-transport-dts"
+
+- name: Deploy ciao-transport-spine
+  hosts: all
+  become: True
+  vars:
+    cip_name: "ciao-transport-spine"
+    cip_version: "1.0.0-SNAPSHOT"
+    etcd_path: "{{ etcd_root }}{{ cip_name }}/{{ cip_version }}/"
+    spine_receive_port: "8122"
+    keystore_folder: "/opt/keystores"
+  vars_files:
+    - ciao-s-base-vars.yml
+    - ciao-s-app-dss-vars.yml
+  tasks:     
+    - name: Set configuration items in etcd
+      shell: curl {{ etcd_path }}{{ item.key }} -XPUT -d value="{{ item.value }}"
+      run_once: true
+      with_items:
+        - { key: 'configured', value: 'true' }
+        - { key: 'camel.log.mdc', value: 'true' }
+        - { key: 'camel.log.trace', value: 'false' }
+        - { key: 'camel.log.debugStreams', value: 'false' }
+        - { key: 'processorConfig', value: 'default' }
+        - { key: 'messagingConfig', value: 'activemq' }
+        - { key: 'repositoryConfig', value: 'memory' }
+        - { key: 'addressingConfig', value: 'static' }
+        - { key: 'sslConfig', value: 'vanilla' }
+        - { key: 'activemq.brokerURL', value: '{{ activemq_transport }}' }
+        - { key: 'activemq.userName', value: '{{ activemq_username }}' }
+        - { key: 'activemq.password', value: '{{ activemq_password }}' }
+        - { key: 'jms.concurrentConsumers', value: '20' }
+        - { key: 'jms.concurrentConsumers2', value: '2' }
+        - { key: 'spine.toUri', value: 'http://localhost:8123/' } 
+        - { key: 'spine.fromUri', value: 'jetty:http://localhost:{{ spine_recieve_port }}/' } 
+        - { key: 'spine.replyUri', value: 'jms2:topic:document-ebxml-acks' } 
+        - { key: 'TRUST_STORE', value: '/opt/keystores/SpineDEVCerts.keystore' } 
+        - { key: 'TRUST_STORE_PW', value: 'password' } 
+        - { key: 'KEY_STORE', value: '/opt/keystores/SpineCiaoTest1.keystore' } 
+        - { key: 'KEY_STORE_PW', value: 'password' } 
+        - { key: 'KEY_PASSWORD', value: 'password' } 
+        - { key: 'sds.url', value: 'ldap://localhost:1234' } 
+        - { key: 'sds.authentication', value: 'simple' } 
+        - { key: 'sds.principal', value: 'cn=Manager,dc=example,dc=com' } 
+        - { key: 'sds.credentials', value: 'passw0rd' } 
+        - { key: 'addressing.staticFiles', value: '' } 
+        - { key: 'addressing.sdsCacheUri', value: 'hazelcast:map:spine-endpoint-addresses' } 
+        - { key: 'senderPartyId', value: '!REQUIRED!' } 
+        - { key: 'senderAsid', value: '!REQUIRED!' } 
+        - { key: 'senderODSCode', value: '!REQUIRED!' } 
+        - { key: 'auditODSCode', value: '!OPTIONAL!' } 
+        - { key: 'senderItkService', value: 'urn:nhs-itk:services:201005:sendDistEnvelope' } 
+        - { key: 'senderService', value: 'urn:nhs:names:services:itk' } 
+        - { key: 'senderAction', value: 'COPC_IN000001GB01' } 
+        - { key: 'itkDocumentSenderQueue', value: 'cda-documents' } 
+        - { key: 'multipartMessageSenderQueue', value: 'multipart-message-sender' } 
+        - { key: 'multipartMessageResponseQueue', value: 'multipart-message-responses' }
+        - { key: 'distributionEnvelopeReceiverQueue', value: 'distribution-envelope-receiver' } 
+        - { key: 'itkMessageReceiverQueue', value: 'itk-message-receiver' }  
+        - { key: 'inProgressFolder', value: '/opt/ciao-transport-dts/in-progress' }
+    - name: Install ciao-transport-spine
+      docker:
+        name: ciao-transport-spine
+        image: hscic/ciao-transport-spine
+        state: {{ docker_state }}
+        restart_policy: always
+        ports:
+        - "{{ spine_receive_port }}:{{ spine_receive_port }}"
+# Placeholder for potential JMX port
+#        - "8778:8778"
+        env:
+          CIAO_ETCD_URL: http://{{ ansible_default_ipv4.address }}:4001
+        volumes:
+        - "{{ inprogress_folder }}:/opt/ciao-transport-spine/in-progress"
+        - "{{ keystore_folder }}:/opt/keystores"
+
+- name: Deploy ciao-cda-builder
+  hosts: all
+  become: True
+  vars:
+    cip_name: "ciao-cda-builder"
+    cip_version: "1.0.0-SNAPSHOT"
+    etcd_path: "{{ etcd_root }}{{ cip_name }}/{{ cip_version }}/"
+  vars_files:
+    - ciao-s-base-vars.yml
+    - ciao-s-app-dss-vars.yml
+  tasks:     
+    - name: Set configuration items in etcd
+      shell: curl {{ etcd_path }}{{ item.key }} -XPUT -d value="{{ item.value }}"
+      run_once: true
+      with_items:
+        - { key: 'configured', value: 'true' }
+        - { key: 'camel.log.mdc', value: 'true' }
+        - { key: 'camel.log.trace', value: 'false' }
+        - { key: 'camel.log.debugStreams', value: 'false' }
+        - { key: 'processorConfig', value: 'default' }
+        - { key: 'messagingConfig', value: 'activemq' }
+        - { key: 'activemq.brokerURL', value: '{{ activemq_transport }}' }
+        - { key: 'activemq.userName', value: '{{ activemq_username }}' }
+        - { key: 'activemq.password', value: '{{ activemq_password }}' }
+        - { key: 'cdaBuilderRoutes', value: 'default' }
+        - { key: 'cdaBuilderRoutes.outputQueue', value: '{{ builder_out_q }}' }
+        - { key: 'cdaBuilderRoutes.processorId', value: 'processor' }
+        - { key: 'cdaBuilderRoutes.default.inputQueue', value: '{{ transformer_out_q }}' }
+        - { key: 'inProgressFolder', value: '/opt/ciao-cda-builder/in-progress' }
+    - name: Install ciao-cda-builder
+      docker:
+        name: ciao-cda-builder
+        image: hscic/ciao-cda-builder
+        state: "{{ docker_state }}"
+        restart_policy: always
+        ports:
+# Placeholder for potential JMX port
+#        - "8778:8778"
+        env:
+          CIAO_ETCD_URL: http://{{ ansible_default_ipv4.address }}:4001
+        volumes:
+        - "{{ inprogress_folder }}:/opt/ciao-cda-builder/in-progress"
+
+- name: Deploy ciao-docs-transformer
+  hosts: all
+  become: True
+  vars:
+    cip_name: "ciao-docs-transformer"
+    cip_version: "1.0.0-SNAPSHOT"
+    etcd_path: "{{ etcd_root }}{{ cip_name }}/{{ cip_version }}/"
+    route_kings: "kings"
+    route_kent: "kent"
+  vars_files:
+    - ciao-s-base-vars.yml
+    - ciao-s-app-dss-vars.yml
+  tasks:     
+    - name: Set configuration items in etcd
+      shell: curl {{ etcd_path }}{{ item.key }} -XPUT -d value="{{ item.value }}"
+      run_once: true
+      with_items:
+        - { key: 'configured', value: 'true' }
+        - { key: 'camel.log.mdc', value: 'true' }
+        - { key: 'camel.log.trace', value: 'false' }
+        - { key: 'camel.log.debugStreams', value: 'false' }
+        - { key: 'processorConfig', value: 'default' }
+        - { key: 'messagingConfig', value: 'activemq' }
+        - { key: 'activemq.brokerURL', value: '{{ activemq_transport }}' }
+        - { key: 'activemq.userName', value: '{{ activemq_username }}' }
+        - { key: 'activemq.password', value: '{{ activemq_password }}' }
+        - { key: 'documentTransformerRoutes', value: '{{ route_kings }},{{ route_kent }}' }
+        - { key: 'documentTransformerRoutes.outputQueue', value: '{{ transformer_out_q }}' }
+        - { key: 'documentTransformerRoutes.{{ route_kings }}.inputQueue', value: 'parsed-kings-documents' }
+        - { key: 'documentTransformerRoutes.{{ route_kings }}.transformerId', value: 'kingsWordDischargeNotificationTransformer' }
+        - { key: 'documentTransformerRoutes.{{ route_kent }}.inputQueue', value: 'parsed-kent-documents' }
+        - { key: 'documentTransformerRoutes.{{ route_kent }}.transformerId', value: 'kentEDNTransformer' }
+        - { key: 'inProgressFolder', value: '/opt/ciao-docs-transformer/in-progress' }
+    - name: Install ciao-docs-transformer
+      docker:
+        name: ciao-docs-transformer
+        image: hscic/ciao-docs-transformer
+        state: "{{ docker_state }}"
+        restart_policy: always
+        ports:
+# Placeholder for potential JMX port
+#        - "8778:8778"
+        env:
+          CIAO_ETCD_URL: http://{{ ansible_default_ipv4.address }}:4001
+        volumes:
+        - "{{ inprogress_folder }}:/opt/ciao-docs-transformer/in-progress"
+
+- name: Deploy ciao-docs-enricher
+  hosts: all
+  become: True
+  vars:
+    cip_name: "ciao-docs-enricher"
+    cip_version: "1.0.0-SNAPSHOT"
+    etcd_path: "{{ etcd_root }}{{ cip_name }}/{{ cip_version }}/"
+  vars_files:
+    - ciao-s-base-vars.yml
+    - ciao-s-app-dss-vars.yml
+  tasks:
+    - name: Install kings-static.json
+      copy: src=files/kings-static.json dest=/opt/ciao-docs-enricher/json/kings-static.json
+    - name: Set configuration items in etcd 
+      shell: curl {{ etcd_path }}{{ item.key }} -XPUT -d value="{{ item.value }}"
+      run_once: true
+      with_items:
+        - { key: 'configured', value: 'true' }
+        - { key: 'camel.log.mdc', value: 'true' }
+        - { key: 'camel.log.trace', value: 'false' }
+        - { key: 'camel.log.debugStreams', value: 'false' }
+        - { key: 'processorConfig', value: 'include-json' }
+        - { key: 'messagingConfig', value: 'activemq' }
+        - { key: 'activemq.brokerURL', value: '{{ activemq_transport }}' }
+        - { key: 'activemq.userName', value: '{{ activemq_username }}' }
+        - { key: 'activemq.password', value: '{{ activemq_password }}' }
+        - { key: 'documentEnricherRoutes', value: 'default' }
+        - { key: 'documentEnricherRoutes.outputQueue', value: '{{ enricher_out_q }}' }
+        - { key: 'documentEnricherRoutes.default.enricherId', value: 'enricher' }
+        - { key: 'documentEnricherRoutes.default.inputQueue', value: '{{ parser_out_q }}' }
+        - { key: 'json.resourcePaths', value: 'file:///opt/ciao-docs-enricher/json/kings-static.json' }
+        - { key: 'inProgressFolder', value: '/opt/ciao-docs-enricher/in-progress' }
+    - name: Install ciao-docs-enricher
+      docker:
+        name: ciao-docs-enricher
+        image: hscic/ciao-docs-enricher
+        state: "{{ docker_state }}"
+        restart_policy: always
+        ports:
+# Placeholder for potential JMX port
+#        - "8778:8778"
+        env:
+          CIAO_ETCD_URL: http://{{ ansible_default_ipv4.address }}:4001
+        volumes:
+        - "/opt/ciao-docs-enricher/json:/opt/ciao-docs-enricher/json"
+        - "{{ inprogress_folder }}:/opt/ciao-docs-enricher/in-progress"
+
+- name: Deploy ciao-docs-parser
+  hosts: all
+  become: True
+  vars:
+    cip_name: "ciao-docs-parser"
+    cip_version: "1.0.0-SNAPSHOT"
+    etcd_path: "{{ etcd_root }}{{ cip_name }}/{{ cip_version }}/"
+    route_dn: "discharge-notification"
+    route_ed: "ed-discharge"
+    route_auto: "auto-detect"
+    route_word: "word-discharge-notification"
+  vars_files:
+    - ciao-s-base-vars.yml
+    - ciao-s-app-dss-vars.yml
+  tasks:
+    - name: Set configuration items in etcd
+      shell: curl {{ etcd_path }}{{ item.key }} -XPUT -d value="{{ item.value }}"
+      run_once: true
+      with_items:
+        - { key: 'configured', value: 'true' }
+        - { key: 'camel.log.mdc', value: 'true' }
+        - { key: 'camel.log.trace', value: 'false' }
+        - { key: 'camel.log.debugStreams', value: 'false' }
+        - { key: 'processorConfig', value: 'default' }
+        - { key: 'repositoryConfig', value: 'memory' }
+        - { key: 'messagingConfig', value: 'activemq' }
+        - { key: 'activemq.brokerURL', value: '{{ activemq_transport }}' }
+        - { key: 'activemq.userName', value: '{{ activemq_username }}' }
+        - { key: 'activemq.password', value: '{{ activemq_password }}' } 
+        - { key: 'documentParserRoutes', value: '{{ route_dn }},{{ route_ed }},{{ route_auto}},{{ route_word }}' }
+        - { key: 'documentParserRoutes.outputQueue', value: '{{ parser_out_q }}' }
+        - { key: 'documentParserRoutes.inProgressFolder', value: '/opt/ciao-docs-parser/in-progress' }
+        - { key: 'documentParserRoutes.idempotentRepositoryId', value: 'idempotentRepository' }
+        - { key: 'documentParserRoutes.inProgressRepositoryId', value: 'inProgressRepository' }
+        - { key: 'documentParserRoutes.{{ route_dn }}.inputFolder', value: '/opt/ciao-docs-parser/input/{{ route_dn }},{{ route_word }}' }
+        - { key: 'documentParserRoutes.{{ route_dn }}.completedFolder', value: '{{ completed_folder }}/{{ route_dn }}' } 
+        - { key: 'documentParserRoutes.{{ route_dn }}.errorFolder', value: '/opt/ciao-docs-parser/error/{{ route_dn }}' } 
+        - { key: 'documentParserRoutes.{{ route_dn }}.processorId', value: 'dischargeNotificationProcessor' }    
+        - { key: 'documentParserRoutes.{{ route_ed }}.inputFolder', value: '/opt/ciao-docs-parser/input/{{ route_ed }}' }
+        - { key: 'documentParserRoutes.{{ route_ed }}.completedFolder', value: '{{ completed_folder }}/{{ route_ed }}' } 
+        - { key: 'documentParserRoutes.{{ route_ed }}.errorFolder', value: '/opt/ciao-docs-parser/error/{{ route_ed }}' } 
+        - { key: 'documentParserRoutes.{{ route_ed }}.processorId', value: 'edDischargeProcessor' }     
+        - { key: 'documentParserRoutes.{{ route_auto }}.inputFolder', value: '/opt/ciao-docs-parser/input/{{ route_auto }}' }
+        - { key: 'documentParserRoutes.{{ route_auto }}.completedFolder', value: '{{ completed_folder }}/{{ route_auto }}' } 
+        - { key: 'documentParserRoutes.{{ route_auto }}.errorFolder', value: '/opt/ciao-docs-parser/error/{{ route_auto }}' } 
+        - { key: 'documentParserRoutes.{{ route_auto }}.processorId', value: 'autoDetectProcessor' } 
+        - { key: 'documentParserRoutes.{{ route_word }}.inputFolder', value: '/opt/ciao-docs-parser/input/{{ route_word }}' }
+        - { key: 'documentParserRoutes.{{ route_word }}.completedFolder', value: '{{ completed_folder }}/{{ route_word }}' } 
+        - { key: 'documentParserRoutes.{{ route_word }}.errorFolder', value: '/opt/ciao-docs-parser/error/{{ route_word }}' } 
+        - { key: 'documentParserRoutes.{{ route_word }}.processorId', value: 'wordDischargeNotificationProcessor' }       
+    - name: Install ciao-docs-parser
+      docker:
+        name: ciao-docs-parser
+        image: hscic/ciao-docs-parser
+        state: "{{ docker_state }}"
+        restart_policy: always
+        ports:
+# Placeholder for potential JMX port
+#        - "8778:8778"
+        env:
+          CIAO_ETCD_URL: http://{{ ansible_default_ipv4.address }}:4001
+        volumes:
+        - "{{ input_folder }}:/opt/ciao-docs-parser/input"
+        - "{{ error_folder }}:/opt/ciao-docs-parser/error"
+        - "{{ inprogress_folder }}:/opt/ciao-docs-parser/in-progress"

@@ -1,0 +1,14 @@
+define service{
+    host_name                      {{ inventory_hostname }}
+    service_description            KIBANA
+    check_command                  check_http! -I {{ ansible_default_ipv4.address }} -p {{ kibana_port }}
+    check_interval                 10
+    check_period                   24x7
+    retry_interval                 3
+    max_check_attempts             3
+    notification_interval          30
+    notification_period            24x7
+    notification_options           w,c,u,r
+    contact_groups                 admins
+  }
+

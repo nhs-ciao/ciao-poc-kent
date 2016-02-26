@@ -1,0 +1,1 @@
+singleton ansible_ssh_host=X.X.X.X

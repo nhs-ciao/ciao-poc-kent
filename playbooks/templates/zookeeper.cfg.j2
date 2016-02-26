@@ -1,0 +1,14 @@
+define service{
+    host_name                      {{ inventory_hostname }}
+    service_description            ZOOKEEPER
+    check_command                  check_tcp!{{ zookeeper_port }}! -s ruok -e imok 
+    check_interval                 10
+    check_period                   24x7
+    retry_interval                 3
+    max_check_attempts             3
+    notification_interval          30
+    notification_period            24x7
+    notification_options           w,c,u,r
+    contact_groups                 admins
+  }
+

@@ -1,0 +1,9 @@
+tickTime=2000
+dataDir=/tmp/zookeeper
+clientPort=2181
+autopurge.purgeInterval=1
+initLimit=5
+syncLimit=2
+{% for host in groups.zookeeper %}
+server.{{ loop.index }}={% if ansible_hostname == hostvars[host].ansible_hostname %}0.0.0.0{% else%}{{ hostvars[host].ansible_default_ipv4.address }}{% endif %}:2888:3888
+{% endfor %}

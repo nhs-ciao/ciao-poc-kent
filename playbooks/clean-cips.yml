@@ -1,0 +1,30 @@
+---
+# Clean CIPs
+#
+
+- name: Clean down CIPs on hosts
+  hosts: all
+  become: True
+  tasks:
+    - name: Stop all CIP containers
+      shell: docker stop {{ item }}
+      ignore_errors: yes
+      with_items:
+        - ciao-docs-parser
+        - ciao-docs-enricher
+        - ciao-docs-transformer
+        - ciao-cda-builder
+        - ciao-transport-spine
+        - ciao-transport-dts
+        - ciao-docs-finalizer
+    - name: Remove all CIP containers
+      shell: docker rm {{ item }}
+      ignore_errors: yes
+      with_items:
+        - ciao-docs-parser
+        - ciao-docs-enricher
+        - ciao-docs-transformer
+        - ciao-cda-builder
+        - ciao-transport-spine
+        - ciao-transport-dts
+        - ciao-docs-finalizer
