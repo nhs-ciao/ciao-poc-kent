@@ -11,12 +11,13 @@ They have provided a SSH username and password to login to EASTKENT. This accoun
 ## 26/02/2016 - Mike Kelly
 SSH into HSCICBASTION from Windows 7 laptop on HSCIC network using PuTTY.
 
-*Success.
+**Success**
 
 SSH from HSCICBASTION to EASTKENT.
-`$ ssh USER@EASTKENT
 
-*Success.
+`$ ssh USER@EASTKENT`
+
+**Success**
 
 
 
