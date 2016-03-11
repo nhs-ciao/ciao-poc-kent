@@ -244,10 +244,10 @@ document.
 The deployment and configuration instructions are defined in Ansible playbooks (playbooks are written in YAML).
 
 Base services deployment and configuration is defined in its own playbook with the file naming pattern `ciao-X-base.yml`. An associated file containing variable definitions that 
-will be shared across playbooks has the file naming pattern `ciao-X-base-vars.yml'.
+will be shared across playbooks has the file naming pattern `ciao-X-base-vars.yml`.
 
 Application services deployment and configuration is defined in its own playbook with the file naming pattern `ciao-X-app-Y.yml`. An associated file containing variable definitions that 
-will be shared across playbooks has the file naming pattern `ciao-X-app-Y-vars.yml'.
+will be shared across playbooks has the file naming pattern `ciao-X-app-Y-vars.yml`.
 
 The order of deployment and configuration should be base services first followed by application services. An additional playbook with the file naming pattern 
 `ciao-X-cloud-Y.yml` just calls the base services and application services playbooks in the correct order. Within CIAO a CLOUD is considered to be a deployment and configuration of
@@ -286,6 +286,7 @@ $ sudo -E pip install docker-py
 
 Edit ciao-s-base.yml and comment out task:
 
+```
 ---
 # CIAO singleton base services
 #
@@ -302,6 +303,7 @@ Edit ciao-s-base.yml and comment out task:
 
 Rerun playbook:
 
+```
 $ ansible-playbook ciao-s-base.yml
 SSH password:                                                                                                                                                           SSH password:
 SUDO password[defaults to SSH password]:
@@ -504,6 +506,7 @@ singleton                  : ok=50   changed=1    unreachable=0    failed=0
 
 $
 ```
+
 **Success**
 
 ###(5) Check CIAO base services are running
