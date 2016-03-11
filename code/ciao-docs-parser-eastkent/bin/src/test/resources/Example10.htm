@@ -1,0 +1,326 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 6.00.3790.4605" name=GENERATOR></HEAD>
+<BODY>
+<STYLE media=all>BODY {
+	FONT-SIZE: 9pt; FONT-FAMILY: arial, verdana, helvetica; BACKGROUND-COLOR: #ffffff
+}
+TABLE {
+	BORDER-RIGHT: 0px; BORDER-TOP: 0px; FONT-SIZE: 9pt; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px
+}
+TABLE.bordered {
+	BORDER-RIGHT: #000 1px solid; BORDER-TOP: #000 1px solid; BORDER-LEFT: #000 1px solid; WIDTH: 95%; BORDER-BOTTOM: #000 1px solid; BORDER-COLLAPSE: collapse
+}
+TABLE.container {
+	BORDER-RIGHT: 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px; WIDTH: 95%; BORDER-BOTTOM: 0px
+}
+TR.head {
+	FONT-WEIGHT: bold; FONT-SIZE: 9pt; VERTICAL-ALIGN: bottom; COLOR: #000000; FONT-FAMILY: arial, helvetica, verdana; BACKGROUND-COLOR: #f0f0ff
+}
+TD {
+	BORDER-TOP-WIDTH: 0pt; PADDING-RIGHT: 0pt; PADDING-LEFT: 0pt; BORDER-LEFT-WIDTH: 0pt; BORDER-BOTTOM-WIDTH: 0pt; PADDING-BOTTOM: 0pt; MARGIN: 0pt; VERTICAL-ALIGN: top; PADDING-TOP: 0pt; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 0pt
+}
+TABLE.bordered TD {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; PADDING-BOTTOM: 2pt; PADDING-TOP: 2pt
+}
+TD.leftAlign {
+	PADDING-RIGHT: 0pt; PADDING-LEFT: 0pt; PADDING-BOTTOM: 0pt; VERTICAL-ALIGN: top; PADDING-TOP: 0pt; TEXT-ALIGN: left
+}
+TD.midAlign {
+	VERTICAL-ALIGN: top; TEXT-ALIGN: center
+}
+TD.rightAlign {
+	VERTICAL-ALIGN: top; TEXT-ALIGN: right
+}
+TD.head {
+	FONT-WEIGHT: bold; FONT-SIZE: 9pt; VERTICAL-ALIGN: bottom; COLOR: #000000; FONT-FAMILY: arial, helvetica, verdana; BACKGROUND-COLOR: #e0e0ff; TEXT-ALIGN: center
+}
+TD.drug {
+	FONT-SIZE: 9pt
+}
+TD.drugTitle {
+	FONT-WEIGHT: bold; FONT-SIZE: 9pt; BACKGROUND-COLOR: #cccccc
+}
+TD.nhsLogo {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 2px; FONT-WEIGHT: bold; FONT-SIZE: 14pt; PADDING-BOTTOM: 0px; COLOR: #ffffff; PADDING-TOP: 0px; FONT-STYLE: italic; FONT-FAMILY: Verdana, Arial; LETTER-SPACING: -2px; BACKGROUND-COLOR: #10498c; TEXT-ALIGN: center; font-stretch: extra-expanded
+}
+TABLE.container TD {
+	BORDER-TOP-WIDTH: 0pt; PADDING-RIGHT: 0pt; PADDING-LEFT: 0pt; BORDER-LEFT-WIDTH: 0pt; BORDER-BOTTOM-WIDTH: 0pt; PADDING-BOTTOM: 0pt; MARGIN: 0pt; VERTICAL-ALIGN: top; PADDING-TOP: 0pt; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 0pt
+}
+.setNameEDN {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; FONT-WEIGHT: bold; FONT-SIZE: 11pt; PADDING-BOTTOM: 2pt; VERTICAL-ALIGN: top; PADDING-TOP: 2pt; WHITE-SPACE: nowrap; TEXT-ALIGN: left
+}
+.settingNameEDN {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; FONT-WEIGHT: bold; FONT-SIZE: 8pt; PADDING-BOTTOM: 2pt; VERTICAL-ALIGN: top; PADDING-TOP: 2pt; WHITE-SPACE: nowrap; TEXT-ALIGN: left
+}
+.settingNameEDNLeft {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; FONT-WEIGHT: bold; FONT-SIZE: 8pt; PADDING-BOTTOM: 2pt; VERTICAL-ALIGN: top; PADDING-TOP: 2pt; WHITE-SPACE: nowrap; TEXT-ALIGN: left
+}
+.settingValueEDN {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; PADDING-BOTTOM: 2pt; VERTICAL-ALIGN: middle; PADDING-TOP: 2pt; TEXT-ALIGN: left
+}
+.settingCommentEDN {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; PADDING-BOTTOM: 2pt; VERTICAL-ALIGN: middle; PADDING-TOP: 2pt; TEXT-ALIGN: left
+}
+.settingLabelEDN {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; PADDING-BOTTOM: 2pt; VERTICAL-ALIGN: middle; PADDING-TOP: 2pt; FONT-STYLE: italic; TEXT-ALIGN: left
+}
+.PRStatusTable {
+	BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; BORDER-BOTTOM: #000000 1px solid
+}
+.PRPharmacyHead {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; MARGIN: 0px; COLOR: #000000; FONT-FAMILY: verdana, arial, helvetica; BACKGROUND-COLOR: #cccccc
+}
+TD.PRsign {
+	BORDER-RIGHT: #cccccc 1px solid; HEIGHT: 40px
+}
+</STYLE>
+
+<STYLE media=all>.allergyRedAlert {
+	FONT-WEIGHT: bold; COLOR: #cc0000
+}
+TR.allergyRedAlert TD {
+	FONT-SIZE: 12pt
+}
+.allergyGreenAlert {
+	FONT-WEIGHT: bold; COLOR: #000000
+}
+TR.allergyGreenAlert TD {
+	FONT-SIZE: 12pt
+}
+</STYLE>
+
+
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD class=rightAlign width="100%">
+      <TABLE id=Table8 cellSpacing=0 cellPadding=0 border=0>
+        <TBODY>
+        <TR>
+          <TD style="VERTICAL-ALIGN: bottom; TEXT-ALIGN: right" 
+            vAlign=bottom><FONT style="FONT-WEIGHT: bold; FONT-SIZE: 11pt">Test NHS Foundation Trust&nbsp;</FONT> </TD>
+          <TD class=nhsLogo width=45>NHS</TD></TR>
+        <TR>
+          <TD class=rightAlign><FONT 
+            style="FONT-WEIGHT: bold; FONT-SIZE: 11pt; COLOR: #10498c">&nbsp;</FONT> 
+          </TD>
+          <TD></TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TD colSpan=2>
+      <DIV 
+  style="WIDTH: 100%; BORDER-BOTTOM: #10498c 2px solid"></DIV></TD></TR></TBODY></TABLE>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD width="35%">
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD style="FONT-SIZE: 10pt" width="100%">TEST MEDICAL CENTRE<BR>TT0 0TT 
+        </TD></TR></TBODY></TABLE></TD>
+    <TD width="65%">
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD style="FONT-SIZE: 10pt; TEXT-ALIGN: right"><EM>Ward Tel:</EM> 
+            01111 222333</TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 10pt; TEXT-ALIGN: right"><EM>Date:</EM> 
+            13/06/2015 19:12:30</TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 10pt; TEXT-ALIGN: right"><EM>Discharge 
+            Id:</EM> 5555555</TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TD><BR></TD></TR>
+  <TR>
+    <TD style="FONT-SIZE: 10pt">Dear Dr T TEST</TD></TR>
+  <TR>
+    <TD><BR></TD></TR></TBODY></TABLE>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD style="TEXT-ALIGN: center"><STRONG><FONT size=3>Discharge 
+      Notification</FONT></STRONG></TD></TR>
+  <TR>
+    <TD><BR></TD></TR>
+  <TR>
+    <TD style="FONT-SIZE: 9pt">This patient was an inpatient under the care of 
+      DR T TESTER (Specialty: PAEDIATRIC MEDICINE (420)) on Test Ward at 
+      Test Hospital on 10/06/2015. The patient was discharged on 
+      13/06/2015 .</TD></TR>
+  <TR>
+    <TD><BR></TD></TR></TBODY></TABLE>
+<TABLE class=container>
+  <TBODY>
+  <TR>
+    <TD width="5%">
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap><EM>Patient:</EM></TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap><EM>D.O.B.:</EM></TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap><EM>NHS No.:</EM></TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap><EM>Hospital 
+        No.:</EM></TD></TR></TBODY></TABLE></TD>
+    <TD align=left>
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap><B>MST TEST TEST-FIVE</B></TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap>05/05/2015</TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap>555 555 5555 (Number present and 
+            verified) &nbsp; </TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap>00000005</TD></TR></TBODY></TABLE></TD>
+    <TD width="65%">
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD 
+            style="FONT-SIZE: 9pt; TEXT-ALIGN: right"><EM>Address:&nbsp;&nbsp;</EM></TD>
+          <TD style="FONT-SIZE: 9pt">5 TEST VIEW<BR>TT5 5TT</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<HR>
+
+<TABLE id=Table2>
+  <TBODY>
+  <TR>
+    <TD class=setNameEDN>Allergies </TD></TR>
+  <TR class=allergyGreenAlert>
+    <TD class=settingValueEDN width="100%">No known 
+allergies</TD></TR></TBODY></TABLE>
+<P><BR></P>
+<TABLE id=Table5>
+  <TBODY>
+  <TR>
+    <TD class=setNameEDN>Medication on Discharge </TD></TR>
+  <TR>
+    <TD class=leftAlign width="100%">
+      <TABLE id=Table3>
+        <TBODY>
+        <TR>
+          <TD class=settingNameEDN width="15%">Clinician:</TD>
+          <TD class=settingValueEDN width="15%">T Test</TD>
+          <TD class=settingNameEDN width="10%">Designation:</TD>
+          <TD class=settingValueEDN width="10%">ST2, Child Health, TEST</TD>
+          <TD class=settingNameEDN width="5%">Date:</TD>
+          <TD class=settingValueEDN width="15%">13/06/2015 19:12 </TD>
+          <TD class=settingNameEDN width="10%">Bleep/Ext No.:</TD>
+          <TD class=settingValueEDN width="10%">5555</TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TD class=leftAlign width="100%">
+      <TABLE class=bordered>
+        <TBODY>
+        <TR>
+          <TD class=drugTitle>Drug</TD>
+          <TD class=drugTitle>Dose</TD>
+          <TD class=drugTitle>Frequency</TD>
+          <TD class=drugTitle>Route</TD>
+          <TD class=drugTitle>Duration</TD>
+          <TD class=drugTitle>Supply</TD>
+          <TD class=drugTitle align=middle>GP<BR>continue?</TD>
+          <TD class=drugTitle></TD></TR></TBODY>
+        <TBODY>
+        <TR>
+          <TD>Cefalexin syrup 125mg/5ml </TD>
+          <TD>125mg&nbsp; </TD>
+          <TD>Twice a day&nbsp; </TD>
+          <TD>oral&nbsp; </TD>
+          <TD align=middle>4 days&nbsp; </TD>
+          <TD align=middle>Ward Fridge&nbsp; </TD>
+          <TD align=middle>No&nbsp; </TD>
+          <TD align=middle><B></B></TD></TR>
+        <TR class="drugline drugbottom">
+          <TD colSpan=8></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<HR>
+
+<TABLE id=Table1 border=0 xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+  <TBODY>
+  <TR>
+    <TD class=setNameEDN>Clinical Assessment</TD></TR>
+  <TR>
+    <TD class=settingNameEDN width="40%"></TD>
+    <TD class=settingValueEDN width="60%"></TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Mode of Admission: </TD>
+    <TD class=settingValueEDN>Emergency G.P</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Reason for Admission / History of Presenting 
+      Complaint(s): </TD>
+    <TD class=settingValueEDN>Unwell intermittently for 3 weeks, initially 
+      started with fever and sore throat then improved. cough for 2 weeks, 
+      snuffly for 1 week. intermittent pyrexia for 3 days, 1 day vomiting post 
+      feed on 10/6/15, loose stool. increased drowsiness</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Clinical Findings on Admission: </TD>
+    <TD class=settingValueEDN>temp 38.7, HB 164, RR 52, saturations 97%. 
+      Cardio: normal hear sounds, chest clear, abdomen soft. eczema noted over 
+      abdomen</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Physical Status on Admission: </TD>
+    <TD class=settingValueEDN>Fully active, no restrictions</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Admitting Consultant: </TD>
+    <TD class=settingValueEDN>T Test</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Consultant in charge of patients care: </TD>
+    <TD class=settingValueEDN>T Test</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Acute Diagnosis: </TD>
+    <TD class=settingValueEDN>Viral illness</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Weight: </TD>
+    <TD class=settingValueEDN>8 Kg</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Parent/Adolescent smoker: </TD>
+    <TD class=settingValueEDN>No </TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Main Treatment: </TD>
+    <TD class=settingValueEDN>3 doses of ceftriaxone, to complete 4 days of 
+      oral cefalexin.</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Relevant Laboratory Results: </TD>
+    <TD class=settingValueEDN>10/6/15: Hb 112, wbc 23, neut 11.4, plts 314, Na 
+      133, K+ 4.9, creat 18, CRP 114. blood culture no growth 11/6/15: urine mcs 
+      no growth. CSF WBC 2, RBC &lt;1, protein 0.18, glucose 3.4, no growth. 
+      12/6/15: Hb 108, wbc 12, plts 322, CRP 66, U&amp;Es and LFTs normal.</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Relevant Imaging Results: </TD>
+    <TD class=settingValueEDN>Chest xray: right sided haziness, likely viral, 
+      no focal consolidation</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Clinical Findings on Discharge: </TD>
+    <TD class=settingValueEDN>Normal systemic examination</TD></TR></TBODY></TABLE>
+<HR xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<!--empty-->
+<TABLE id=Table1 border=0 xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+  <TBODY>
+  <TR>
+    <TD class=setNameEDN>Management</TD></TR>
+  <TR>
+    <TD class=settingNameEDN width="40%"></TD>
+    <TD class=settingValueEDN width="60%"></TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Has the Accompanying adult given consent to view 
+      the Child's Summary Care Record?: </TD>
+    <TD class=settingValueEDN>No</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Discharge Destination: </TD>
+    <TD class=settingValueEDN>Own home</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Information Given to Patient/Parent/Care 
+      giver/Guardian/Accompanying adult: </TD>
+    <TD class=settingValueEDN>As above. Mum informed of negative cultures and 
+      repeat CRP. 48 hours open access.</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Hospital OP Appointment Booked: </TD>
+    <TD class=settingValueEDN>No </TD></TR></TBODY></TABLE>
+<HR xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+
+<P align=left><BR></P></BODY></HTML>
