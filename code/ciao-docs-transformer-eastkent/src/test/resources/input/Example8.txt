@@ -1,0 +1,97 @@
+{
+  "trustName": "Test NHS Foundation Trust",
+  "hospitalName": "TEST MEDICAL CENTRE\nTT0 0TT",
+  "Ward Tel": "01111 222333",
+  "Date": "13/06/2015 13:28:09",
+  "Discharge Id": "3333333",
+  "gpName": "Dear Dr T TEST",
+  "dischargeSummary": "This patient was an inpatient under the care of DR T TESTER (Specialty: HEALTH CARE OF OLDER PEOPLE (430)) on Test Ward at Test Hospital on 10/06/2015. The patient was discharged on 13/06/2015 .",
+  "Patient": "MR TEST TEST-THREE",
+  "D.O.B.": "03/03/1935",
+  "NHS No.": "333 333 3333 (Number present and verified)",
+  "Hospital No.": "333333",
+  "Address": "3 TEST \n            GARDENS\nTT3 3TT",
+  "dischargeMedicationStaff": {
+    "Clinician": "T Test",
+    "Designation": "Medicine Test",
+    "Date": "13/06/2015 10:55",
+    "Bleep/Ext No.": "3333"
+  },
+  "dischargeMedication": [
+    {
+      "Drug": "Amoxicillin capsules",
+      "Dose": "1g",
+      "Frequency": "three times a day",
+      "Route": "oral",
+      "Duration": "7 days",
+      "Supply": "TTO Pre-Pack",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Adcal D3 chewable (calcium carbonate 1.5g /colecalciferol 400 Units) tablets",
+      "Dose": "one tablet",
+      "Frequency": "Twice a day",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "POD",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Furosemide (frusemide) tablets",
+      "Dose": "40mg",
+      "Frequency": "Every morning",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "POD",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Omeprazole capsules",
+      "Dose": "20mg",
+      "Frequency": "Every morning",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "POD",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Tamsulosin m/r capsules",
+      "Dose": "400mcg",
+      "Frequency": "every morning",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "POD",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Warfarin tablets",
+      "Dose": "1 mg Monday & Friday, other days 2mg daily",
+      "Frequency": "once a day",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "POD",
+      "GP continue?": "Yes"
+    }
+  ],
+  "Mode of Admission": "Emergency",
+  "Patient 75 Or Over": "Yes",
+  "Dementia Audit": "Emergency Admission and 75 or over",
+  "Reason for Admission / History of Presenting Complaint(s)": "This 80 year old gentleman presented with an episode of haematuria, assocaited with lower abdominal pain, dysuria and fever. He is on warfarin. His imflammatory markers were not raised, his chest ray was clear and his abdominal x ray unremarkable. Clinical examination was also unremarkable. He was started on oral antibiotics, and had a stat dose of gentamicin. He will have an OP referral to urology for microscopic haematuria. He is awaiting an ultrasound abdomen at time of writing.",
+  "Does the patient have a diagnosis of Delirium on admission": "No",
+  "Does the patient have a formal diagnosis of Dementia": "No",
+  "Has the patient become more forgetful in last 12 months": "No",
+  "Was an AMT completed": "Yes",
+  "Overall AMT Score": "10",
+  "Diagnosis": "UTI",
+  "Other Previous Diagnoses": "Resected brain tumour, prostate cancer treated in 2006, PE, bilateral knee replacmeents, CKD stage 3- baseline creat was 150, paroxysmal AF, C1-C2 lminectomy, UTI stroke",
+  "Operations and Procedures": "as above",
+  "Does this patient have a catheter?": "No",
+  "Physical Status on Admission": "Ambulatory. Self caring. Unable to work. Mobile more than half of waking hours",
+  "Physical Status on Discharge": "Ambulatory. Self caring. Unable to work. Mobile more than half of waking hours",
+  "Discharge Destination": "home with care package",
+  "Information Given to Patient and/or Authorised Representative": "as above",
+  "VTE Assessent Completed": "Yes Smoking Cessation",
+  "Patient is a current smoker": "Ex Smoker (To be classed as an ex smoker, patients must have abstained for 3 months)",
+  "Appointment Details": "Dr Test in 6 weeks",
+  "Further Investigations": "Urology referral re: microscopic haematuria."
+}

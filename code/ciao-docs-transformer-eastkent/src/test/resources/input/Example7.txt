@@ -1,0 +1,142 @@
+{
+  "trustName": "Test NHS Foundation Trust",
+  "hospitalName": "TEST MEDICAL CENTRE\nTT0 0TT",
+  "Ward Tel": "01111 222333",
+  "Date": "09/06/2015 11:22:33",
+  "Discharge Id": "2222222",
+  "gpName": "Dear Dr T TEST",
+  "medicinesReconcilationName": "T Test",
+  "medicinesReconcilationPosition": "Technician",
+  "medicinesReconcilationDate": "10/06/2015",
+  "dischargeSummary": "This patient was a day case patient under the care of MR T TESTER (Specialty: VASCULAR SURGERY (107)) on Test Ward at Test Hospital on 09/06/2015. The patient was discharged on 13/06/2015 .",
+  "Patient": "MRS TEST TEST-TWO",
+  "D.O.B.": "02/02/1949",
+  "NHS No.": "222 222 2222 (Number present and verified)",
+  "Hospital No.": "000002",
+  "Address": "2 TEST ROAD\nTT2 2TT",
+  "dischargeMedicationStaff": [
+    {
+      "Clinician": "Test Tester",
+      "Designation": "F1 Doctor",
+      "Date": "13/06/2015 12:34",
+      "Bleep/Ext No.": "4321"
+    },
+    {
+      "Editing Pharmacist": "Test Pharm",
+      "Date": "13/06/2015 12:34"
+    },
+    {
+      "Prescription Authorised By": "Test Pharm",
+      "Date": "13/06/2015 12:33"
+    }
+  ],
+  "dischargeMedication": [
+    {
+      "Drug": "Baclofen tablets",
+      "Dose": "10mg",
+      "Frequency": "Three times a day",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "POD",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Gabapentin capsules",
+      "Dose": "100mg",
+      "Frequency": "three times a day",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "POD",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Adcal D3 chewable (calcium carbonate 1.5g /colecalciferol 400 Units) tablets",
+      "Dose": "1 tablet",
+      "Frequency": "Twice a day",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "POD",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Celecoxib capsules",
+      "Dose": "100mg",
+      "Frequency": "Once a day",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "POD",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Aspirin dispersible tablets",
+      "Dose": "75mg",
+      "Frequency": "Every morning",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "POD",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Beclometasone 100 micrograms/dose (as Clenil Modulite) inhaler",
+      "Dose": "2 puffs",
+      "Frequency": "twice a day",
+      "Route": "inhaler",
+      "Duration": "Ongoing",
+      "Supply": "POD",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Lansoprazole capsules",
+      "Dose": "30mg",
+      "Frequency": "every morning",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "POD",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Amitriptyline tablets",
+      "Dose": "75mg",
+      "Frequency": "at night",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "POD",
+      "GP continue?": "To be reviewed"
+    },
+    {
+      "Drug": "Ferrous fuMARate tablets",
+      "Dose": "305mg",
+      "Frequency": "Once a day",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "Pharmacy",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Folic acid tablets",
+      "Dose": "5mg",
+      "Frequency": "Every morning",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "Pharmacy",
+      "GP continue?": "Yes"
+    }
+  ],
+  "Mode of Admission": "Emergency",
+  "Presenting Complaint": "Mrs Test-Two was seen in the vascular nurse clinic at Test via an urgent referral from her podiatry clinic. She has a 4-6 week history of ulceration of the 4th adn 5th toes of the left foot. Constant pain in the toes. Discussed at clinic with Mr Test (Vascular Surgeon) who advised admission to Test Hospital for prostacyclin infusion (Flolan) to try to improve blood flow to the foot, and a foot x-ray to investigate for any osteomyelitis (infection in the bone).",
+  "Chronic Diagnoses": "Rheumatoid arthritis, anaemia",
+  "Comorbidities": "Asthma",
+  "Procedure 1": "N/A",
+  "Clinical Details": "Foot x-ray - inconclusive for osteomyelitis. No further imaging requested as clinically no osteomyelitis present. Superficial infection.",
+  "Notes": [
+    "Bloods:",
+    "Hb 97 WCC 7.3 Plt 292 Na 136 K 3.9 Creat 38 CRP 57",
+    "B12 472 Folate 3.3 Ferritin 18 Iron 3.1 TSAT 5 Transferrin 2.31",
+    "Mrs Test-Two was noted to have low iron and folate levels. Her usual ferrous fumarate was therefore increased from every other day to daily and folic acid started. Could GP please repeat FBC and haematinics in the next few weeks to monitor response"
+  ],
+  "Has the Patient given consent to view their Summary Care Record?": "No",
+  "Discharge Destination": "Own home",
+  "Information Given to Patient": "Mrs Test-Two was informed about her admission as per this discharge letter. She will receive a letter in the post with details of her follow-up appointment with Mr Test. Please seek help if you are concerned about the wound - if there is increased pain, redness, breakdown of the skin, size of the wound or discharge from the wound.",
+  "Hospital OP Appointment Booked": "Appt Required",
+  "Appointment Details": "2 weeks with Mr Test"
+}
