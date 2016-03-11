@@ -128,4 +128,51 @@ TO DO:
 
 `$ sudo apt-get install ansible`
 
+## 11/03/2016 - Mike Kelly
+### [ISSUE 01]
+Internet access is locked down to specific host names and ports. This should not be present any problems, as general access to the Internet is not required.
 
+### [ISSUE 02]
+This maybe a proxy issue.
+
+Check apt configuration in `/etc/apt/apt.conf`:
+
+`Acquire::http::Proxy "http://A.B.C.D:E";`
+
+Make sure sudo user is aware of proxy settings:
+
+```
+export http_proxy="http://username:password@your proxy":"port" 
+export https_proxy="https://username:password@your proxy":"port"
+```
+
+Now try to install Ansible again:
+
+
+`$ sudo apt-add-repository ppa:ansible/ansible`
+
+**Success**
+
+`$ sudo apt-get update`
+
+
+`$ sudo apt-get install ansible`
+
+**Success**
+
+Check ansible installed OK.
+
+```
+$ ansible --version
+ansible 2.0.1.0
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = Default w/o overrides
+teleologic@ekciaoprd01:~$ nano /etc/apt/apt.conf
+teleologic@ekciaoprd01:~$ ansible --version
+ansible 2.0.1.0
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = Default w/o overrides
+```
+
+**Success**
+ 
