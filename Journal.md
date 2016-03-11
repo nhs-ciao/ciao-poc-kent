@@ -146,10 +146,10 @@ export http_proxy="http://username:password@your proxy":"port"
 export https_proxy="https://username:password@your proxy":"port"
 ```
 
-Now try to install Ansible again:
+Now try to install Ansible again, but export the environment variables of the user you are currently using:
 
 
-`$ sudo apt-add-repository ppa:ansible/ansible`
+`$ sudo -E apt-add-repository ppa:ansible/ansible`
 
 **Success**
 
