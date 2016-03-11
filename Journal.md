@@ -175,4 +175,363 @@ ansible 2.0.1.0
 ```
 
 **Success**
+
+###(1) Git clone ciao-poc-kent repository from GitHub
+
+For the POC the CIAO team have setup a public repository on GitHub at `http://github.com/nhs-ciao/ciao-poc-kent.git`
+
+`$ git clone http://github.com/nhs-ciao/ciao-poc-kent.git`
+
+**Success**
+
+The basic structure of the repository is:
+
+ciao-poc-kent/Journal.md - This journal in markdown format
+
+ciao-poc-kent/playbooks - The ansible playbooks and associated template and confiuration files
+
+ciao-poc-kent/code - The source code projects for the Kent specific CIAO components
+
+**[Note]** The git repository has been cloned into the home directory of USER@EASTKENT  
+
+###(2) Configure Ansible
+
+Edit USER@EASTKENT `~/ciao-poc-kent/playbooks/ansible.cfg`
+
+
+```
+[defaults]
+inventory = hosts-s
+remote_port = 22
+remote_user = USER
+ask_pass = True
+nocows = 1
+ask_sudo_pass = True
+become_method = sudo
+```
+
+Change USER to USER@EASTKENT.
+
+Edit USER@EASTKENT `~/ciao-poc-kent/playbooks/hosts-s`
+
+```
+singleton ansible_ssh_host=X.X.X.X
+```
+
+Change X.X.X.X to ip address of EASTKENT.
+
+###(3) Setup SSH host
+
+Ansible configuration has been setup to use password based SSH, which means first time you connect to a SSH host you get prompted around accepting the ECDSA 
+fingerprint and adding the host to the list of known hosts. This initial prompt stops ansible, so it is easier to just set this up before running ansible by SSH to 
+each host ansible will deploy to. In this case it is one host EASTKENT.
+
+```
+$ ssh USER@EASTKENT
+The authenticity of host 'EASTKENT (EASTKENT)' can't be established.
+ECDSA key fingerprint is 37:a7:45:d2:7a:6c:40:cb:c4:43:b4:39:8d:5c:bc:19.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'EASTKENT' (ECDSA) to the list of known hosts.
+Write failed: Broken pipe
+```
+
+###(4) Install CIAO base services
+
+CIAO consists of a set of services, each running in their own Docker container. These services are divided in to base services and application services. Base services provide 
+the generic infrastructure services such as message broker, while the application services provide the care specific services such as parsing a discharge document or creating a CDA 
+document.
+
+The deployment and configuration instructions are defined in Ansible playbooks (playbooks are written in YAML).
+
+Base services deployment and configuration is defined in its own playbook with the file naming pattern `ciao-X-base.yml`. An associated file containing variable definitions that 
+will be shared across playbooks has the file naming pattern `ciao-X-base-vars.yml'.
+
+Application services deployment and configuration is defined in its own playbook with the file naming pattern `ciao-X-app-Y.yml`. An associated file containing variable definitions that 
+will be shared across playbooks has the file naming pattern `ciao-X-app-Y-vars.yml'.
+
+The order of deployment and configuration should be base services first followed by application services. An additional playbook with the file naming pattern 
+`ciao-X-cloud-Y.yml` just calls the base services and application services playbooks in the correct order. Within CIAO a CLOUD is considered to be a deployment and configuration of
+base and application services on a set of hosts.
+
+For the purposes of this POC base services will be deployed, configured and installed directly from their playbook to allow testing, before moving onto the application services.
+ 
+For a singleton install (everything on one host) the ansible playbook to use is USER@EASTKENT `~/ciao-poc-kent/playbooks/ciao-s-base.yml` 
+
+Run the platbook:
+
+```
+$ cd ~/ciao-poc-kent/playbooks
+$ ansible-playbook ciao-s-base.yml
+SSH password:
+SUDO password[defaults to SSH password]:
+...
+...
+TASK [Install docker-py as a workaround for Ansible issue] *********************
+fatal: [singleton]: FAILED! => {"changed": false, "cmd": "/usr/bin/pip install -U docker-py", "failed": true, "msg": "stdout: Cannot fetch index base URL https://pypi.python.org/simple/\nCould not find any downloads that satisfy the requirement docker-py in /usr/local/lib/python2.7/dist-packages\nDownloading/unpacking docker-py\nCleaning up...\nNo distributions at all found for docker-py in /usr/local/lib/python2.7/dist-packages\nStoring debug log for failure in /root/.pip/pip.log\n"}
+```
+ 
+**Failure**
+
+The task is trying to install the pip package docker-py, but fails. Assume it is the same proxy issue as before with sudo user.
+
+Workaround.
+
+Manually install pip package:
+
+```
+$ sudo -E pip install docker-py
+```
+
+**Success**
+
+Edit ciao-s-base.yml and comment out task:
+
+---
+# CIAO singleton base services
+#
+
+- name: Deploy ansible docker issues workaround
+  hosts: all
+  become: True
+  tasks:
+    - name: Install python pip
+      apt: name=python-pip state=present update_cache=yes cache_valid_time=3600
+#    - name: Install docker-py as a workaround for Ansible issue
+#      pip: name=docker-py state=latest
+```
+
+Rerun playbook:
+
+$ ansible-playbook ciao-s-base.yml
+SSH password:                                                                                                                                                           SSH password:
+SUDO password[defaults to SSH password]:
+
+PLAY [Deploy ansible docker issues workaround] *********************************
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Install python pip] ******************************************************
+ok: [singleton]
+
+PLAY [Deploy Nagios] ***********************************************************
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Create Nagios configuration directory] ***********************************
+ok: [singleton]
+
+TASK [Create Nagios configuration commands sub-directory] **********************
+ok: [singleton]
+
+TASK [Create Nagios configuration timeperiods sub-directory] *******************
+ok: [singleton]
+
+TASK [Create Nagios configuration contacts sub-directory] **********************
+ok: [singleton]
+
+TASK [Create Nagios configuration hosts sub-directory] *************************
+ok: [singleton]
+
+TASK [Create Nagios configuration services sub-directory] **********************
+ok: [singleton]
+
+TASK [Install nagios.cfg] ******************************************************
+ok: [singleton]
+
+TASK [Install resource.cfg] ****************************************************
+ok: [singleton]
+
+TASK [Install templates.cfg] ***************************************************
+ok: [singleton]
+
+TASK [Install cgi.cfg] *********************************************************
+ok: [singleton]
+
+TASK [Install commands.cfg] ****************************************************
+ok: [singleton]
+
+TASK [Install timeperiods.cfg] *************************************************
+ok: [singleton]
+
+TASK [Install contacts.cfg] ****************************************************
+ok: [singleton]
+
+TASK [Install Nagios] **********************************************************
+ok: [singleton]
+
+PLAY [Deploy Nagios host and service configurations for monitoring] ************
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Install host configurations for host in the CIAO cloud] ******************
+ok: [singleton]
+
+TASK [Install service configurations for host in the CIAO cloud] ***************
+ok: [singleton]
+
+PLAY [Deploy ELK] **************************************************************
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Create Logstash configuration directory] *********************************
+ok: [singleton]
+
+TASK [Create Elastic data directory] *******************************************
+ok: [singleton]
+
+TASK [Install Logstash configuration file] *************************************
+ok: [singleton]
+
+TASK [Install ELK stack] *******************************************************
+ok: [singleton]
+
+PLAY [Deploy Nagios service configurations for monitoring ELK] *****************
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Install service configurations for host running logstash] ****************
+ok: [singleton]
+
+TASK [Install service configurations for host running elastic] *****************
+ok: [singleton]
+
+TASK [Install service configurations for host running kibana] ******************
+ok: [singleton]
+
+PLAY [Deploy etcd Browser] *****************************************************
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Install etcd browser] ****************************************************
+ok: [singleton]
+
+PLAY [Deploy Nagios service configurations for monitoring etcd Browser] ********
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Install service configuration for host running etcd Browser] *************
+ok: [singleton]
+
+PLAY [Deploy Logspout] *********************************************************
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Install Logspout] ********************************************************
+ok: [singleton]
+
+PLAY [Deploy Nagios service configurations for monitoring logspout] ************
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Install service configurations for host running logspout] ****************
+ok: [singleton]
+
+PLAY [Deploy etcd] *************************************************************
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Install etcd] ************************************************************
+ok: [singleton]
+
+PLAY [Deploy Nagios service configurations for monitoring etcd] ****************
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Install service configurations for host running etcd] ********************
+ok: [singleton]
+
+PLAY [Deploy ActiveMQ] *********************************************************
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Create ActiveMQ configuration directory] *********************************
+ok: [singleton]
+
+TASK [Install broker configuration file] ***************************************
+ok: [singleton]
+
+TASK [Install other configuration files] ***************************************
+ok: [singleton] => (item=log4j.properties)
+ok: [singleton] => (item=broker.ks)
+ok: [singleton] => (item=broker.ts)
+ok: [singleton] => (item=broker-localhost.cert)
+ok: [singleton] => (item=client.ks)
+ok: [singleton] => (item=client.ts)
+ok: [singleton] => (item=credentials.properties)
+ok: [singleton] => (item=credentials-enc.properties)
+ok: [singleton] => (item=groups.properties)
+ok: [singleton] => (item=jetty.xml)
+ok: [singleton] => (item=jetty-realm.properties)
+ok: [singleton] => (item=jmx.access)
+ok: [singleton] => (item=jmx.password)
+ok: [singleton] => (item=logging.properties)
+ok: [singleton] => (item=login.config)
+ok: [singleton] => (item=users.properties)
+
+TASK [Install ActiveMQ] ********************************************************
+ok: [singleton]
+
+PLAY [Deploy Nagios service configurations for monitoring ActiveMQ] ************
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Install service configurations for host running ActiveMQ Web Console] ****
+ok: [singleton]
+
+PLAY [Restart Nagios] **********************************************************
+
+TASK [setup] *******************************************************************
+ok: [singleton]
+
+TASK [Restart Nagios] **********************************************************
+changed: [singleton]
+
+PLAY RECAP *********************************************************************
+singleton                  : ok=50   changed=1    unreachable=0    failed=0
+
+$
+```
+**Success**
+
+###(5) Check CIAO base services are running
+
+See what docker containers are running:
+
+```
+$ sudo docker ps
+
+CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS              PORTS                                                                        NAMES
+67d61569d5e6        hscic/ciao-activemq          "bin/bash -c '/opt/ac"   10 minutes ago      Up 10 minutes       0.0.0.0:8161->8161/tcp, 0.0.0.0:61616->61616/tcp, 0.0.0.0:61619->61619/tcp   ciao-activemq
+c69573029f87        quay.io/coreos/etcd:v2.0.8   "/etcd"                  10 minutes ago      Up 10 minutes       0.0.0.0:2379-2380->2379-2380/tcp, 0.0.0.0:4001->4001/tcp, 7001/tcp           ciao-etcd
+633a542d8f4b        gliderlabs/logspout          "/bin/logspout syslog"   10 minutes ago      Up 10 minutes       0.0.0.0:8000->8000/tcp                                                       ciao-logspout
+cd2cbbe6b665        buddho/etcd-browser          "nodejs server.js"       10 minutes ago      Up 10 minutes       0.0.0.0:7999->8000/tcp                                                       ciao-etcdbrowser
+7e4707278960        hscic/ciao-elk               "/usr/bin/supervisord"   11 minutes ago      Up 11 minutes       0.0.0.0:514->514/tcp, 0.0.0.0:9200->9200/tcp, 0.0.0.0:8080->80/tcp           ciao-elk
+9dbc8288cc80        tpires/nagios                "/usr/local/bin/start"   12 minutes ago      Up 4 minutes        0.0.0.0:8081->80/tcp                                                         ciao-nagios
+```
+
+**Success**
+
+We have the base services running:
+
+* The message broker: ciao-activemq
+* The key value store: ciao-etcd
+* The log collector: ciao-logspout
+* The key value store browser: ciao-etcdbrowser
+* The log store and reporting dashboard: ciao-elk
+* The service management console: ciao-nagios
+
+TO DO - check consoles and logs of base services.
  
