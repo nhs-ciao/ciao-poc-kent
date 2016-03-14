@@ -38,7 +38,7 @@ public class EastKentPropertiesTransformerFactory {
 		transformer.splitProperty("gpName", "Dear (.+)", "gpName");
 		
 		transformer.splitProperty("dischargeSummary", "This patient was an? (.+) under the care of (.+)(?: \\(Specialty: (.+)\\)) on (.+) at (.+) on (.+). The patient was discharged on (.+?)\\s*.",
-				"patientType", "doctorName", "doctorSpeciality", "ward", "hospital", "admissionDate", "dischargeDate");
+				"patientType", "doctorName", "specialty", "documentAuthorWorkgroupName", "hospital", "admissionDate", "dischargeDate");
 		
 		transformer.splitProperty("NHS No\\.", "([\\d ]*\\d)(?: \\(.*)?", "nhsNumber");
 		transformer.splitProperty("NHS No\\.", ".*\\((.+)\\)\\s*", "nhsNumberVerification");

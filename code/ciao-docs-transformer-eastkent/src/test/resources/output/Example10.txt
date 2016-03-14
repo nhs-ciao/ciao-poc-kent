@@ -1,0 +1,63 @@
+{
+  "trustName": "Test NHS Foundation Trust",
+  "hospitalName": [
+    "TEST MEDICAL CENTRE",
+    "TT0 0TT"
+  ],
+  "Ward Tel": "01111 222333",
+  "Date": "2015-06-13 19:12:30",
+  "Discharge Id": "5555555",
+  "gpName": "Dr T TEST",
+  "dischargeSummary": "This patient was an inpatient under the care of DR T TESTER (Specialty: PAEDIATRIC MEDICINE (420)) on Test Ward at Test Hospital on 10/06/2015. The patient was discharged on 13/06/2015 .",
+  "Patient": "MST TEST TEST-FIVE",
+  "D.O.B.": "2015-05-05",
+  "NHS No.": "555 555 5555 (Number present and verified)",
+  "Hospital No.": "00000005",
+  "Address": [
+    "5 TEST VIEW",
+    "TT5 5TT"
+  ],
+  "dischargeMedicationStaff": {
+    "Clinician": "T Test",
+    "Designation": "ST2, Child Health, TEST",
+    "Date": "2015-06-13 19:12",
+    "Bleep/Ext No.": "5555"
+  },
+  "dischargeMedication": [
+    {
+      "Drug": "Cefalexin syrup 125mg/5ml",
+      "Dose": "125mg",
+      "Frequency": "Twice a day",
+      "Route": "oral",
+      "Duration": "4 days",
+      "Supply": "Ward Fridge",
+      "GP continue?": "No"
+    }
+  ],
+  "Mode of Admission": "Emergency G.P",
+  "Reason for Admission / History of Presenting Complaint(s)": "Unwell intermittently for 3 weeks, initially started with fever and sore throat then improved. cough for 2 weeks, snuffly for 1 week. intermittent pyrexia for 3 days, 1 day vomiting post feed on 10/6/15, loose stool. increased drowsiness",
+  "Clinical Findings on Admission": "temp 38.7, HB 164, RR 52, saturations 97%. Cardio: normal hear sounds, chest clear, abdomen soft. eczema noted over abdomen",
+  "Physical Status on Admission": "Fully active, no restrictions",
+  "Admitting Consultant": "T Test",
+  "Consultant in charge of patients care": "T Test",
+  "Acute Diagnosis": "Viral illness",
+  "Weight": "8 Kg",
+  "Parent/Adolescent smoker": "No",
+  "Main Treatment": "3 doses of ceftriaxone, to complete 4 days of oral cefalexin.",
+  "Relevant Laboratory Results": "10/6/15: Hb 112, wbc 23, neut 11.4, plts 314, Na 133, K+ 4.9, creat 18, CRP 114. blood culture no growth 11/6/15: urine mcs no growth. CSF WBC 2, RBC <1, protein 0.18, glucose 3.4, no growth. 12/6/15: Hb 108, wbc 12, plts 322, CRP 66, U&Es and LFTs normal.",
+  "Relevant Imaging Results": "Chest xray: right sided haziness, likely viral, no focal consolidation",
+  "Clinical Findings on Discharge": "Normal systemic examination",
+  "Has the Accompanying adult given consent to view the Child's Summary Care Record?": "No",
+  "Discharge Destination": "Own home",
+  "Information Given to Patient/Parent/Care giver/Guardian/Accompanying adult": "As above. Mum informed of negative cultures and repeat CRP. 48 hours open access.",
+  "Hospital OP Appointment Booked": "No",
+  "patientType": "inpatient",
+  "doctorName": "DR T TESTER",
+  "doctorSpeciality": "PAEDIATRIC MEDICINE (420)",
+  "ward": "Test Ward",
+  "hospital": "Test Hospital",
+  "admissionDate": "2015-06-10",
+  "dischargeDate": "2015-06-13",
+  "nhsNumber": "555 555 5555",
+  "nhsNumberVerification": "Number present and verified"
+}

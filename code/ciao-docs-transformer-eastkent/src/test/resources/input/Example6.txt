@@ -1,0 +1,23 @@
+{
+  "trustName": "Test NHS Foundation Trust",
+  "hospitalName": "TEST MEDICAL CENTRE\nTT0 0TT",
+  "Ward Tel": "01111 222333",
+  "Date": "08/06/2015 11:22:33",
+  "Discharge Id": "1111111",
+  "gpName": "Dear Dr T TEST",
+  "dischargeSummary": "This patient was a day case patient under the care of DR T TESTER (Specialty: DERMATOLOGY (330)) on Test Dermatology Centre at Test Hospital on 06/06/2015. The patient was discharged on 08/06/2015 .",
+  "Patient": "MR TEST TEST-ONE",
+  "D.O.B.": "01/01/1934",
+  "NHS No.": "111 111 1111 (Number present and verified)",
+  "Hospital No.": "00000001",
+  "Address": "1 TEST CLOSE\nTT1 1TT",
+  "Mode of Admission": "Elective",
+  "Presenting Complaint": "Biopsy proven BCC left temple and BCC chest under LA",
+  "Name of Surgeon performing Surgery": "T Test",
+  "Procedure 1": "Excision biopsy proven BCC left temple and BCC chest under LA",
+  "Clinical Details": "La 2% Lignocaine with 1:200,000 Adr BCC Left temple biopsy proven excised 3-4mm margin down to subcut fat - Skin closure 4/0 Nylon. For ROS 7d. BCC chest excised 3-4mm margin down to subcut fat - Skin closure 4/0 Nylon. For ROS 10d.",
+  "Histology / Biopsies Taken": "BCC Left temple biopsy proven excised 3-4mm margin down to subcut fat - 12olcock marker suture BCC chest excised 3-4mm margin down to subcut fat - 12olcock marker suture",
+  "Has the Patient given consent to view their Summary Care Record?": "No",
+  "Information Given to Patient": "For ROS 7d left temple and chest 10d Wound care sheet",
+  "Hospital OP Appointment Booked": "No"
+}
