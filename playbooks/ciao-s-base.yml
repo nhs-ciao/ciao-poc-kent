@@ -8,8 +8,9 @@
   tasks:
     - name: Install python pip
       apt: name=python-pip state=present update_cache=yes cache_valid_time=3600
-    - name: Install docker-py as a workaround for Ansible issue
-      pip: name=docker-py state=latest
+# For Kent POC do this by hand - see journal
+#    - name: Install docker-py as a workaround for Ansible issue
+#      pip: name=docker-py state=latest
 
 - name: Deploy Nagios
   hosts: all

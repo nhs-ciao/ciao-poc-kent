@@ -537,4 +537,53 @@ We have the base services running:
 * The service management console: ciao-nagios
 
 TO DO - check consoles and logs of base services.
+
+## 14/03/2016 - Mike Kelly
+
+###(1) Check base services running
+
+```
+$ sudo docker ps shows
+```
+Shows that all the base services have been up and running since install 2 days ago.
+
+###(2) Check base services logs
+
+```
+$ sudo docker logs ciao-activemq
+...
+$ sudo docker logs ciao-etcd
+...
+$ sudo docker logs ciao-logspout
+...
+$ sudo docker logs ciao-etcdbrowser
+...
+$ sudo docker logs ciao-elk
+...
+$ sudo docker logs ciao-nagios
+...
+```
+
+Issue with logspout:
+
+```
+2016/03/12 05:50:11 syslog: write udp 10.136.219.57:514: connection refused
+2016/03/12 05:50:12 syslog: write udp 10.136.219.57:514: connection refused
+2016/03/12 05:50:13 syslog: write udp 10.136.219.57:514: connection refused
+2016/03/12 05:50:17 syslog: write udp 10.136.219.57:514: connection refused
+```
+
+Trying to UDP to syslog - which is logstash running in the ELK container.
+
+Issue with ELK:
+
+```
+2016-03-12 03:17:50,788 INFO spawned: 'logstash' with pid 31537
+2016-03-12 03:17:51,790 INFO success: logstash entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2016-03-12 03:17:56,420 INFO exited: logstash (exit status 1; not expected)
+2016-03-12 03:17:57,422 INFO spawned: 'logstash' with pid 31568
+2016-03-12 03:17:58,424 INFO success: logstash entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2016-03-12 03:18:03,113 INFO exited: logstash (exit status 1; not expected)
+```
+Logstash is crashing. As logstash acts as the syslog server, might be the cause of the logspout issue. Therefore investigate this issue first (TO DO).
  
