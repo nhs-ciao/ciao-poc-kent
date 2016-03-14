@@ -543,7 +543,7 @@ TO DO - check consoles and logs of base services.
 ###(1) Check base services running
 
 ```
-$ sudo docker ps shows
+$ sudo docker ps
 ```
 Shows that all the base services have been up and running since install 2 days ago.
 
