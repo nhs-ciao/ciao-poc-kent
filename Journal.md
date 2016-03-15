@@ -142,8 +142,8 @@ Check apt configuration in `/etc/apt/apt.conf`:
 Make sure sudo user is aware of proxy settings:
 
 ```
-export http_proxy="http://username:password@your proxy":"port" 
-export https_proxy="https://username:password@your proxy":"port"
+$ export http_proxy="http://username:password@your proxy":"port" 
+$ export https_proxy="https://username:password@your proxy":"port"
 ```
 
 Now try to install Ansible again, but export the environment variables of the user you are currently using:
@@ -218,7 +218,7 @@ Change X.X.X.X to ip address of EASTKENT.
 ###(3) Setup SSH host
 
 Ansible configuration has been setup to use password based SSH, which means first time you connect to a SSH host you get prompted around accepting the ECDSA 
-fingerprint and adding the host to the list of known hosts. This initial prompt stops Ansible, so it is easier to just set this up before running ansible by SSH to 
+fingerprint and adding the host to the list of known hosts. This initial prompt stops Ansible, so it is easier to just set this up before running Ansible by SSH to 
 each host Ansible will deploy to. In this case it is one host EASTKENT.
 
 ```
@@ -252,7 +252,7 @@ For the purposes of this POC base services will be deployed, configured and inst
  
 For a singleton install (everything on one host) the Ansible playbook to use is USER@EASTKENT `~/ciao-poc-kent/playbooks/ciao-s-base.yml` 
 
-Run the platbook:
+Run the playbook:
 
 ```
 $ cd ~/ciao-poc-kent/playbooks
@@ -267,7 +267,7 @@ fatal: [singleton]: FAILED! => {"changed": false, "cmd": "/usr/bin/pip install -
  
 **Failure**
 
-The task is trying to install the pip package docker-py, but fails. Assume it is the same proxy issue as before with sudo user.
+The task is trying to install the pip package `docker-py`, but fails. Assume it is the same proxy issue as before with sudo user.
 
 Workaround.
 
@@ -592,8 +592,8 @@ Check apt configuration in `/etc/apt/apt.conf`:
 Make sure sudo user is aware of proxy settings:
 
 ```
-export http_proxy="http://username:password@your proxy":"port" 
-export https_proxy="https://username:password@your proxy":"port"
+$ export http_proxy="http://username:password@your proxy":"port" 
+$ export https_proxy="https://username:password@your proxy":"port"
 ```
 Get the current MESH client:
 
