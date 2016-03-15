@@ -716,6 +716,37 @@ application installed on /home/USER@EASTKENT/MESH-APP-HOME
 [ Writing the uninstaller data ... ]
 [ Console installation done ]
 ```
+Get the keystore for the INTEGRATION environment:
 
-TO DO - setup keystore and `meshclient.cfg` file.
+```
+$ sudo -E wget http://systems.hscic.gov.uk/ddc/mesh/test-client/meshint.keystore
+```
+**Success**
+
+Move the keystore file into the MESH `KEYSTORE` directory:
+
+```
+$ mv meshint.keystore ~/MESH-APP-HOME/KEYSTORE/meshint.keystore
+```
+
+Edit `~/MESH-APP-HOME/meshclient.cfg` file. Set:
+
+```
+...
+<PrimaryURL>https://10.97.89.163</PrimaryURL>
+...
+<KeyStorePath>/home/USER@EASTKENT/MESH-APP-HOME/KEYSTORE/meshint.keystore</KeyStorePath>
+```
+
+Set passwords for MESH test account provided by HSCIC SA Service Desk:
+
+```
+<KeyStorePassword>xxxxxxxx</KeyStorePassword>
+...
+<ClientIdentity>yyyyyyyyyy</ClientIdentity>
+...
+<ClientAuthentication>zzzzzzzzzz</ClientAuthentication>
+
+```
+
  
