@@ -586,4 +586,141 @@ Issue with ELK:
 2016-03-12 03:18:03,113 INFO exited: logstash (exit status 1; not expected)
 ```
 Logstash is crashing. As logstash acts as the syslog server, might be the cause of the logspout issue. Therefore investigate this issue first (TO DO).
+
+## 15/03/2016 - Mike Kelly
+###(1) Install MESH test client
+
+Check apt configuration in `/etc/apt/apt.conf`:
+
+`Acquire::http::Proxy "http://A.B.C.D:E";`
+
+Make sure sudo user is aware of proxy settings:
+
+```
+export http_proxy="http://username:password@your proxy":"port" 
+export https_proxy="https://username:password@your proxy":"port"
+```
+Get the current mesh test client:
+
+```
+$ sudo -E wget http://systems.hscic.gov.uk/ddc/mesh/test-client/mesh-6.0.0.jar
+```
+
+**Success**
+
+MESH needs Java 1.7. So check if Java installed:
+
+```
+$ java -version
+The program 'java' can be found in the following packages:
+ * default-jre
+ * gcj-4.8-jre-headless
+ * openjdk-7-jre-headless
+ * gcj-4.6-jre-headless
+ * openjdk-6-jre-headless
+Try: sudo apt-get install <selected package>
+```
+
+Java not installed so install it:
+
+```
+$ sudo apt-get install openjdk-7-jdk
+```
+
+Check if Java now installed:
+
+```
+$ java -version
+java version "1.7.0_95"
+OpenJDK Runtime Environment (IcedTea 2.6.4) (7u95-2.6.4-0ubuntu0.14.04.1)
+OpenJDK 64-Bit Server VM (build 24.95-b01, mixed mode)
+```
+
+**Success**
+
+Install MESH client (the install dialogue is very verbose!):
+
+```
+$ java -jar mesh-6.0.0.jar
+15-Mar-2016 14:31:58 INFO: Logging initialized at level 'INFO'
+15-Mar-2016 14:31:59 INFO: Commandline arguments:
+15-Mar-2016 14:31:59 INFO: Detected platform: ubuntu_linux,version=3.19.0-25-generic,arch=x64,symbolicName=null,javaVersion=1.7.0_95
+15-Mar-2016 14:31:59 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+15-Mar-2016 14:31:59 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+15-Mar-2016 14:31:59 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+15-Mar-2016 14:32:00 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+Welcome to the installation of HSCIC MESH Client 6.0.0_rc1_20160309!
+
+Press 1 to continue, 2 to quit, 3 to redisplay
+1
+Select the installation path:  [/home/teleologic/MESH-APP-HOME]
+
+
+Press 1 to continue, 2 to quit, 3 to redisplay
+1
+15-Mar-2016 14:32:20 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+Legacy DTS Client Settings
+
+Is the legacy DTS Client already installed on this computer?
+0  [ ] Yes
+1  [x] No
+Input selection:
+1
+
+Press 1 to continue, 2 to quit, 3 to redisplay
+1
+15-Mar-2016 14:32:29 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+Select location for data files
+
+------------------------------------------
+
+ [/home/teleologic/MESH-DATA-HOME]
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Message
+The target directory will be created:
+/home/teleologic/MESH-DATA-HOME
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Enter O for OK, C to Cancel:
+O
+
+Press 1 to continue, 2 to quit, 3 to redisplay
+1
+15-Mar-2016 14:32:48 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+Allow Automatic Updates
+
+Allow new versions of the MESH Client to be downloaded and automatically installed?
+0  [ ] Yes
+1  [x] No
+Input selection:
+1
+
+Press 1 to continue, 2 to quit, 3 to redisplay
+1
+[ Starting to unpack ]
+[ Processing package: Main Application (1/2) ]
+[ Processing package: MESH Files (2/2) ]
+[ Unpacking finished ]
+[ Starting processing ]
+Starting process DTSConverter (1/1)
+DTS Configuration Converter
+Set LogFile variable
+Copied variables from Wizard
+Installing Mesh Client Application
+Checking whether DTS Client configuration is to be used...
+DTS Reconfiguration not required. Setting up Single Mailbox
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Generate an automatic installation script
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Enter Y for Yes, N for No:
+Y
+Select the installation script (path must be absolute)[/home/teleologic/MESH-APP-HOME/auto-install.xml]
+
+Installation was successful
+application installed on /home/teleologic/MESH-APP-HOME
+[ Writing the uninstaller data ... ]
+[ Console installation done ]
+```
+
+TO DO - setup keystore and meshclient.cfg file.
  
