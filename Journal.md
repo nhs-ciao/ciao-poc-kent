@@ -160,15 +160,10 @@ Now try to install Ansible again, but export the environment variables of the us
 
 **Success**
 
-Check ansible installed OK.
+Check Ansible installed OK.
 
 ```
 $ ansible --version
-ansible 2.0.1.0
-  config file = /etc/ansible/ansible.cfg
-  configured module search path = Default w/o overrides
-teleologic@ekciaoprd01:~$ nano /etc/apt/apt.conf
-teleologic@ekciaoprd01:~$ ansible --version
 ansible 2.0.1.0
   config file = /etc/ansible/ansible.cfg
   configured module search path = Default w/o overrides
@@ -188,7 +183,7 @@ The basic structure of the repository is:
 
 ciao-poc-kent/Journal.md - This journal in markdown format
 
-ciao-poc-kent/playbooks - The ansible playbooks and associated template and confiuration files
+ciao-poc-kent/playbooks - The Ansible playbooks and associated template and confiuration files
 
 ciao-poc-kent/code - The source code projects for the Kent specific CIAO components
 
@@ -223,8 +218,8 @@ Change X.X.X.X to ip address of EASTKENT.
 ###(3) Setup SSH host
 
 Ansible configuration has been setup to use password based SSH, which means first time you connect to a SSH host you get prompted around accepting the ECDSA 
-fingerprint and adding the host to the list of known hosts. This initial prompt stops ansible, so it is easier to just set this up before running ansible by SSH to 
-each host ansible will deploy to. In this case it is one host EASTKENT.
+fingerprint and adding the host to the list of known hosts. This initial prompt stops Ansible, so it is easier to just set this up before running ansible by SSH to 
+each host Ansible will deploy to. In this case it is one host EASTKENT.
 
 ```
 $ ssh USER@EASTKENT
@@ -255,7 +250,7 @@ base and application services on a set of hosts.
 
 For the purposes of this POC base services will be deployed, configured and installed directly from their playbook to allow testing, before moving onto the application services.
  
-For a singleton install (everything on one host) the ansible playbook to use is USER@EASTKENT `~/ciao-poc-kent/playbooks/ciao-s-base.yml` 
+For a singleton install (everything on one host) the Ansible playbook to use is USER@EASTKENT `~/ciao-poc-kent/playbooks/ciao-s-base.yml` 
 
 Run the platbook:
 
@@ -284,7 +279,7 @@ $ sudo -E pip install docker-py
 
 **Success**
 
-Edit ciao-s-base.yml and comment out task:
+Edit `ciao-s-base.yml` and comment out task:
 
 ```
 ---
@@ -588,7 +583,7 @@ Issue with ELK:
 Logstash is crashing. As logstash acts as the syslog server, might be the cause of the logspout issue. Therefore investigate this issue first (TO DO).
 
 ## 15/03/2016 - Mike Kelly
-###(1) Install MESH test client
+###(1) Install MESH client
 
 Check apt configuration in `/etc/apt/apt.conf`:
 
@@ -600,7 +595,7 @@ Make sure sudo user is aware of proxy settings:
 export http_proxy="http://username:password@your proxy":"port" 
 export https_proxy="https://username:password@your proxy":"port"
 ```
-Get the current mesh test client:
+Get the current MESH client:
 
 ```
 $ sudo -E wget http://systems.hscic.gov.uk/ddc/mesh/test-client/mesh-6.0.0.jar
@@ -653,7 +648,7 @@ Welcome to the installation of HSCIC MESH Client 6.0.0_rc1_20160309!
 
 Press 1 to continue, 2 to quit, 3 to redisplay
 1
-Select the installation path:  [/home/USER/MESH-APP-HOME]
+Select the installation path:  [/home/USER@EASTKENT/MESH-APP-HOME]
 
 
 Press 1 to continue, 2 to quit, 3 to redisplay
@@ -674,12 +669,12 @@ Select location for data files
 
 ------------------------------------------
 
- [/home/USER/MESH-DATA-HOME]
+ [/home/USER@EASTKENT/MESH-DATA-HOME]
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Message
 The target directory will be created:
-/home/USER/MESH-DATA-HOME
+/home/USER@EASTKENT/MESH-DATA-HOME
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Enter O for OK, C to Cancel:
 O
@@ -714,13 +709,13 @@ Generate an automatic installation script
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Enter Y for Yes, N for No:
 Y
-Select the installation script (path must be absolute)[/home/USER/MESH-APP-HOME/auto-install.xml]
+Select the installation script (path must be absolute)[/home/USER@EASTKENT/MESH-APP-HOME/auto-install.xml]
 
 Installation was successful
-application installed on /home/USER/MESH-APP-HOME
+application installed on /home/USER@EASTKENT/MESH-APP-HOME
 [ Writing the uninstaller data ... ]
 [ Console installation done ]
 ```
 
-TO DO - setup keystore and meshclient.cfg file.
+TO DO - setup keystore and `meshclient.cfg` file.
  
