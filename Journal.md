@@ -653,7 +653,7 @@ Welcome to the installation of HSCIC MESH Client 6.0.0_rc1_20160309!
 
 Press 1 to continue, 2 to quit, 3 to redisplay
 1
-Select the installation path:  [/home/teleologic/MESH-APP-HOME]
+Select the installation path:  [/home/USER/MESH-APP-HOME]
 
 
 Press 1 to continue, 2 to quit, 3 to redisplay
@@ -674,12 +674,12 @@ Select location for data files
 
 ------------------------------------------
 
- [/home/teleologic/MESH-DATA-HOME]
+ [/home/USER/MESH-DATA-HOME]
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Message
 The target directory will be created:
-/home/teleologic/MESH-DATA-HOME
+/home/USER/MESH-DATA-HOME
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Enter O for OK, C to Cancel:
 O
@@ -714,10 +714,10 @@ Generate an automatic installation script
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Enter Y for Yes, N for No:
 Y
-Select the installation script (path must be absolute)[/home/teleologic/MESH-APP-HOME/auto-install.xml]
+Select the installation script (path must be absolute)[/home/USER/MESH-APP-HOME/auto-install.xml]
 
 Installation was successful
-application installed on /home/teleologic/MESH-APP-HOME
+application installed on /home/USER/MESH-APP-HOME
 [ Writing the uninstaller data ... ]
 [ Console installation done ]
 ```
