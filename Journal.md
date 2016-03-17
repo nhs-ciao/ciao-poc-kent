@@ -794,10 +794,10 @@ Check log file `~/MESH-APP-HOME/log/mesh.log` to see if MESH client has started 
 2016-03-17 11:08:53,656:[pool-3-thread-1     ]:INFO :UpdateHouseKeeper   :Starting MESH Client Update Check
 2016-03-17 11:08:53,683:[pool-1-thread-1     ]:INFO :ServiceManager      :Creating Token Pool
 2016-03-17 11:08:54,348:[pool-3-thread-1     ]:INFO :UpdateClientResponseHandler:Client on highest possible version - no upgrade neccesary
-2016-03-17 11:08:54,404:[Mailbox:meshhc3     ]:INFO :AuthenticationService:Successfully Authenticatied Mailbox: XXXXX
-2016-03-17 11:08:54,406:[Mailbox:meshhc3     ]:INFO :SendFilesService    :Sent 0 files for Mailbox:XXXXX
-2016-03-17 11:08:54,406:[Mailbox:meshhc3     ]:INFO :MailboxProcessor    :Sent  0 files for MailboxXXXXX.
-2016-03-17 11:08:54,558:[Mailbox:meshhc3     ]:INFO :MailboxProcessor    :Received  0 files for Mailbox:XXXXX.
+2016-03-17 11:08:54,404:[Mailbox:XXXXXXX     ]:INFO :AuthenticationService:Successfully Authenticatied Mailbox: XXXXX
+2016-03-17 11:08:54,406:[Mailbox:XXXXXXX     ]:INFO :SendFilesService    :Sent 0 files for Mailbox:XXXXX
+2016-03-17 11:08:54,406:[Mailbox:XXXXXXX     ]:INFO :MailboxProcessor    :Sent  0 files for MailboxXXXXX.
+2016-03-17 11:08:54,558:[Mailbox:XXXXXXX     ]:INFO :MailboxProcessor    :Received  0 files for Mailbox:XXXXX.
 ```
 **Success**
  
