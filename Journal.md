@@ -748,5 +748,56 @@ Set passwords for MESH test account provided by HSCIC SA Service Desk:
 <ClientAuthentication>zzzzzzzzzz</ClientAuthentication>
 
 ```
+## 17/03/2016 - Mike Kelly
+###(1) Start MESH client
 
+Go to MESH client directory and start client in detached mode:
+
+```
+$ cd ~/MESH-APP-HOME
+$ bash runMeshClient.sh &
+$
+```
+Check log file `~/MESH-APP-HOME/log/mesh.log` to see if MESH client has started OK:
+
+```
+2016-03-17 11:08:53,470:[main                ]:INFO :MeshClient          :=====================================================================
+2016-03-17 11:08:53,470:[main                ]:INFO :MeshClient          :Starting MESH Client
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :       Client Version: 6.0.0_rc1_20160309
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :=====================================================================
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Loaded Configuration File
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :=========================
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Primary URL: https://EASTKENT
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Keystore Path: /home/USER@EASTKENT/MESH-APP-HOME/KEYSTORE/meshint.keystore
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Signal Path: /home/USER@EASTKENT/MESH-APP-HOME/sig
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Maximum Messages:100
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Maximum Concurrent Connections:2
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Polling Period:30 (minutes)
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Client Count:1
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Allow Automatic Upgrades:No
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :HTTP Proxy: Not Configured
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :
+2016-03-17 11:08:53,472:[main                ]:INFO :MeshClient          :Mailbox Details Info
+2016-03-17 11:08:53,472:[main                ]:INFO :MeshClient          :====================
+2016-03-17 11:08:53,472:[main                ]:INFO :MeshClient          :Client ID:XXXXX
+2016-03-17 11:08:53,472:[main                ]:INFO :MeshClient          :Root Path:/home/USER@EASTKENT/MESH-DATA-HOME/MAILBOX1
+2016-03-17 11:08:53,472:[main                ]:INFO :MeshClient          :Collect Report:true
+2016-03-17 11:08:53,473:[main                ]:INFO :MeshClient          :Transfer Report:false
+2016-03-17 11:08:53,473:[main                ]:INFO :MeshClient          :Poll Report:false
+2016-03-17 11:08:53,473:[main                ]:INFO :MeshClient          :Save Sent:true
+2016-03-17 11:08:53,473:[main                ]:INFO :MeshClient          :========================================================
+2016-03-17 11:08:53,630:[pool-2-thread-1     ]:INFO :SignalFileMonitor   :Starting SignalFileMonitor
+2016-03-17 11:08:53,636:[pool-3-thread-1     ]:INFO :DailyHouseKeeper    :Starting MESH Client Housekeeping
+2016-03-17 11:08:53,656:[pool-3-thread-1     ]:INFO :DailyHouseKeeper    :Finished MESH Client Housekeeping
+2016-03-17 11:08:53,656:[pool-3-thread-1     ]:INFO :UpdateHouseKeeper   :Performing scheduled check for MESH Client Upgrade
+2016-03-17 11:08:53,656:[pool-3-thread-1     ]:INFO :UpdateHouseKeeper   :Starting MESH Client Update Check
+2016-03-17 11:08:53,683:[pool-1-thread-1     ]:INFO :ServiceManager      :Creating Token Pool
+2016-03-17 11:08:54,348:[pool-3-thread-1     ]:INFO :UpdateClientResponseHandler:Client on highest possible version - no upgrade neccesary
+2016-03-17 11:08:54,404:[Mailbox:meshhc3     ]:INFO :AuthenticationService:Successfully Authenticatied Mailbox: XXXXX
+2016-03-17 11:08:54,406:[Mailbox:meshhc3     ]:INFO :SendFilesService    :Sent 0 files for Mailbox:XXXXX
+2016-03-17 11:08:54,406:[Mailbox:meshhc3     ]:INFO :MailboxProcessor    :Sent  0 files for MailboxXXXXX.
+2016-03-17 11:08:54,558:[Mailbox:meshhc3     ]:INFO :MailboxProcessor    :Received  0 files for Mailbox:XXXXX.
+```
+**Success**
  
