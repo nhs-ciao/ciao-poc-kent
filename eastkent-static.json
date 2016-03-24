@@ -1,0 +1,28 @@
+{
+        "documentTitle": "Discharge Summary",
+        "careSetting": "Urology",
+        "custodianODSCode": "RJZ",
+        "custodianOrganisationName": "KING'S COLLEGE HOSPITAL NHS FOUNDATION TRUST",
+        "patientLocalIDAssigningAuthority": "RJZ:KING'S COLLEGE HOSPITAL NHS FOUNDATION TRUST",
+        "patientNHSNoIsTraced": true,
+
+        "documentAuthorOrganisationODSID": "RJZ",
+        "documentAuthorOrganisationName": "KING'S COLLEGE HOSPITAL NHS FOUNDATION TRUST",
+        "medicationsPharmacistScreeningAuthorOrgName": "KING'S COLLEGE HOSPITAL NHS FOUNDATION TRUST",
+        "medicationsPharmacistScreeningAuthorODSCode": "RJZ",
+
+        "patientGender": "female",
+        "recipientFullName": "The Jenner Practice",
+        "recipientOrganisationName": "The Jenner Practice",
+        "recipientODSCode": "RHM",
+        "recipientAddressLine": [
+          "Jenner Health Centre",
+          "201 Stanstead Road, Forest Hill",
+          "London"
+        ],
+        "recipientAddressPostcode": "SE23 1HU",
+
+        "receiverODSCode": "RHM",
+        "itkHandlingSpec": "urn:nhs-itk:interaction:primaryRecipienteDischargeInpatientDischargeSummaryDocument-v1-0"
+}
+
