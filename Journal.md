@@ -142,8 +142,8 @@ Check apt configuration in `/etc/apt/apt.conf`:
 Make sure sudo user is aware of proxy settings:
 
 ```
-export http_proxy="http://username:password@your proxy":"port" 
-export https_proxy="https://username:password@your proxy":"port"
+$ export http_proxy="http://username:password@your proxy":"port" 
+$ export https_proxy="https://username:password@your proxy":"port"
 ```
 
 Now try to install Ansible again, but export the environment variables of the user you are currently using:
@@ -160,15 +160,10 @@ Now try to install Ansible again, but export the environment variables of the us
 
 **Success**
 
-Check ansible installed OK.
+Check Ansible installed OK.
 
 ```
 $ ansible --version
-ansible 2.0.1.0
-  config file = /etc/ansible/ansible.cfg
-  configured module search path = Default w/o overrides
-teleologic@ekciaoprd01:~$ nano /etc/apt/apt.conf
-teleologic@ekciaoprd01:~$ ansible --version
 ansible 2.0.1.0
   config file = /etc/ansible/ansible.cfg
   configured module search path = Default w/o overrides
@@ -188,7 +183,7 @@ The basic structure of the repository is:
 
 ciao-poc-kent/Journal.md - This journal in markdown format
 
-ciao-poc-kent/playbooks - The ansible playbooks and associated template and confiuration files
+ciao-poc-kent/playbooks - The Ansible playbooks and associated template and confiuration files
 
 ciao-poc-kent/code - The source code projects for the Kent specific CIAO components
 
@@ -223,8 +218,8 @@ Change X.X.X.X to ip address of EASTKENT.
 ###(3) Setup SSH host
 
 Ansible configuration has been setup to use password based SSH, which means first time you connect to a SSH host you get prompted around accepting the ECDSA 
-fingerprint and adding the host to the list of known hosts. This initial prompt stops ansible, so it is easier to just set this up before running ansible by SSH to 
-each host ansible will deploy to. In this case it is one host EASTKENT.
+fingerprint and adding the host to the list of known hosts. This initial prompt stops Ansible, so it is easier to just set this up before running Ansible by SSH to 
+each host Ansible will deploy to. In this case it is one host EASTKENT.
 
 ```
 $ ssh USER@EASTKENT
@@ -255,9 +250,9 @@ base and application services on a set of hosts.
 
 For the purposes of this POC base services will be deployed, configured and installed directly from their playbook to allow testing, before moving onto the application services.
  
-For a singleton install (everything on one host) the ansible playbook to use is USER@EASTKENT `~/ciao-poc-kent/playbooks/ciao-s-base.yml` 
+For a singleton install (everything on one host) the Ansible playbook to use is USER@EASTKENT `~/ciao-poc-kent/playbooks/ciao-s-base.yml` 
 
-Run the platbook:
+Run the playbook:
 
 ```
 $ cd ~/ciao-poc-kent/playbooks
@@ -272,7 +267,7 @@ fatal: [singleton]: FAILED! => {"changed": false, "cmd": "/usr/bin/pip install -
  
 **Failure**
 
-The task is trying to install the pip package docker-py, but fails. Assume it is the same proxy issue as before with sudo user.
+The task is trying to install the pip package `docker-py`, but fails. Assume it is the same proxy issue as before with sudo user.
 
 Workaround.
 
@@ -284,7 +279,7 @@ $ sudo -E pip install docker-py
 
 **Success**
 
-Edit ciao-s-base.yml and comment out task:
+Edit `ciao-s-base.yml` and comment out task:
 
 ```
 ---
@@ -537,4 +532,308 @@ We have the base services running:
 * The service management console: ciao-nagios
 
 TO DO - check consoles and logs of base services.
- 
+
+## 14/03/2016 - Mike Kelly
+
+###(1) Check base services running
+
+```
+$ sudo docker ps
+```
+Shows that all the base services have been up and running since install 2 days ago.
+
+###(2) Check base services logs
+
+```
+$ sudo docker logs ciao-activemq
+...
+$ sudo docker logs ciao-etcd
+...
+$ sudo docker logs ciao-logspout
+...
+$ sudo docker logs ciao-etcdbrowser
+...
+$ sudo docker logs ciao-elk
+...
+$ sudo docker logs ciao-nagios
+...
+```
+
+Issue with logspout:
+
+```
+2016/03/12 05:50:11 syslog: write udp 10.136.219.57:514: connection refused
+2016/03/12 05:50:12 syslog: write udp 10.136.219.57:514: connection refused
+2016/03/12 05:50:13 syslog: write udp 10.136.219.57:514: connection refused
+2016/03/12 05:50:17 syslog: write udp 10.136.219.57:514: connection refused
+```
+
+Trying to UDP to syslog - which is logstash running in the ELK container.
+
+Issue with ELK:
+
+```
+2016-03-12 03:17:50,788 INFO spawned: 'logstash' with pid 31537
+2016-03-12 03:17:51,790 INFO success: logstash entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2016-03-12 03:17:56,420 INFO exited: logstash (exit status 1; not expected)
+2016-03-12 03:17:57,422 INFO spawned: 'logstash' with pid 31568
+2016-03-12 03:17:58,424 INFO success: logstash entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2016-03-12 03:18:03,113 INFO exited: logstash (exit status 1; not expected)
+```
+Logstash is crashing. As logstash acts as the syslog server, might be the cause of the logspout issue. Therefore investigate this issue first (TO DO).
+
+## 15/03/2016 - Mike Kelly
+###(1) Install MESH client
+
+Check apt configuration in `/etc/apt/apt.conf`:
+
+`Acquire::http::Proxy "http://A.B.C.D:E";`
+
+Make sure sudo user is aware of proxy settings:
+
+```
+$ export http_proxy="http://username:password@your proxy":"port" 
+$ export https_proxy="https://username:password@your proxy":"port"
+```
+Get the current MESH client:
+
+```
+$ sudo -E wget http://systems.hscic.gov.uk/ddc/mesh/test-client/mesh-6.0.0.jar
+```
+
+**Success**
+
+MESH needs Java 1.7. So check if Java installed:
+
+```
+$ java -version
+The program 'java' can be found in the following packages:
+ * default-jre
+ * gcj-4.8-jre-headless
+ * openjdk-7-jre-headless
+ * gcj-4.6-jre-headless
+ * openjdk-6-jre-headless
+Try: sudo apt-get install <selected package>
+```
+
+Java not installed so install it:
+
+```
+$ sudo apt-get install openjdk-7-jdk
+```
+
+Check if Java now installed:
+
+```
+$ java -version
+java version "1.7.0_95"
+OpenJDK Runtime Environment (IcedTea 2.6.4) (7u95-2.6.4-0ubuntu0.14.04.1)
+OpenJDK 64-Bit Server VM (build 24.95-b01, mixed mode)
+```
+
+**Success**
+
+Install MESH client (the install dialogue is very verbose!):
+
+```
+$ java -jar mesh-6.0.0.jar
+15-Mar-2016 14:31:58 INFO: Logging initialized at level 'INFO'
+15-Mar-2016 14:31:59 INFO: Commandline arguments:
+15-Mar-2016 14:31:59 INFO: Detected platform: ubuntu_linux,version=3.19.0-25-generic,arch=x64,symbolicName=null,javaVersion=1.7.0_95
+15-Mar-2016 14:31:59 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+15-Mar-2016 14:31:59 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+15-Mar-2016 14:31:59 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+15-Mar-2016 14:32:00 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+Welcome to the installation of HSCIC MESH Client 6.0.0_rc1_20160309!
+
+Press 1 to continue, 2 to quit, 3 to redisplay
+1
+Select the installation path:  [/home/USER@EASTKENT/MESH-APP-HOME]
+
+
+Press 1 to continue, 2 to quit, 3 to redisplay
+1
+15-Mar-2016 14:32:20 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+Legacy DTS Client Settings
+
+Is the legacy DTS Client already installed on this computer?
+0  [ ] Yes
+1  [x] No
+Input selection:
+1
+
+Press 1 to continue, 2 to quit, 3 to redisplay
+1
+15-Mar-2016 14:32:29 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+Select location for data files
+
+------------------------------------------
+
+ [/home/USER@EASTKENT/MESH-DATA-HOME]
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Message
+The target directory will be created:
+/home/USER@EASTKENT/MESH-DATA-HOME
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Enter O for OK, C to Cancel:
+O
+
+Press 1 to continue, 2 to quit, 3 to redisplay
+1
+15-Mar-2016 14:32:48 INFO: Cannot find named resource: 'userInputLang.xml' AND 'userInputLang.xml_eng'
+Allow Automatic Updates
+
+Allow new versions of the MESH Client to be downloaded and automatically installed?
+0  [ ] Yes
+1  [x] No
+Input selection:
+1
+
+Press 1 to continue, 2 to quit, 3 to redisplay
+1
+[ Starting to unpack ]
+[ Processing package: Main Application (1/2) ]
+[ Processing package: MESH Files (2/2) ]
+[ Unpacking finished ]
+[ Starting processing ]
+Starting process DTSConverter (1/1)
+DTS Configuration Converter
+Set LogFile variable
+Copied variables from Wizard
+Installing Mesh Client Application
+Checking whether DTS Client configuration is to be used...
+DTS Reconfiguration not required. Setting up Single Mailbox
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Generate an automatic installation script
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Enter Y for Yes, N for No:
+Y
+Select the installation script (path must be absolute)[/home/USER@EASTKENT/MESH-APP-HOME/auto-install.xml]
+
+Installation was successful
+application installed on /home/USER@EASTKENT/MESH-APP-HOME
+[ Writing the uninstaller data ... ]
+[ Console installation done ]
+```
+Get the keystore for the INTEGRATION environment:
+
+```
+$ sudo -E wget http://systems.hscic.gov.uk/ddc/mesh/test-client/meshint.keystore
+```
+**Success**
+
+Move the keystore file into the MESH `KEYSTORE` directory:
+
+```
+$ mv meshint.keystore ~/MESH-APP-HOME/KEYSTORE/meshint.keystore
+```
+
+Edit `~/MESH-APP-HOME/meshclient.cfg` file. Set:
+
+```
+...
+<PrimaryURL>https://10.97.89.163</PrimaryURL>
+...
+<PollPeriod>1</PollPeriod>
+...
+<KeyStorePath>/home/USER@EASTKENT/MESH-APP-HOME/KEYSTORE/meshint.keystore</KeyStorePath>
+```
+
+Set passwords for MESH test account provided by HSCIC SA Service Desk:
+
+```
+<KeyStorePassword>xxxxxxxx</KeyStorePassword>
+...
+<ClientIdentity>meshhc3</ClientIdentity>
+...
+<ClientAuthentication>zzzzzzzzzz</ClientAuthentication>
+
+```
+## 17/03/2016 - Mike Kelly
+###(1) Start MESH client
+
+Go to MESH client directory and start client in detached mode:
+
+```
+$ cd ~/MESH-APP-HOME
+$ bash runMeshClient.sh &
+$
+```
+Check log file `~/MESH-APP-HOME/log/mesh.log` to see if MESH client has started OK:
+
+```
+2016-03-17 11:08:53,470:[main                ]:INFO :MeshClient          :=====================================================================
+2016-03-17 11:08:53,470:[main                ]:INFO :MeshClient          :Starting MESH Client
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :       Client Version: 6.0.0_rc1_20160309
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :=====================================================================
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Loaded Configuration File
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :=========================
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Primary URL: https://10.97.89.163
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Keystore Path: /home/USER@EASTKENT/MESH-APP-HOME/KEYSTORE/meshint.keystore
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Signal Path: /home/USER@EASTKENT/MESH-APP-HOME/sig
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Maximum Messages:100
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Maximum Concurrent Connections:2
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Polling Period:1 (minutes)
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Client Count:1
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :Allow Automatic Upgrades:No
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :HTTP Proxy: Not Configured
+2016-03-17 11:08:53,471:[main                ]:INFO :MeshClient          :
+2016-03-17 11:08:53,472:[main                ]:INFO :MeshClient          :Mailbox Details Info
+2016-03-17 11:08:53,472:[main                ]:INFO :MeshClient          :====================
+2016-03-17 11:08:53,472:[main                ]:INFO :MeshClient          :Client ID:meshhc3
+2016-03-17 11:08:53,472:[main                ]:INFO :MeshClient          :Root Path:/home/USER@EASTKENT/MESH-DATA-HOME/MAILBOX1
+2016-03-17 11:08:53,472:[main                ]:INFO :MeshClient          :Collect Report:true
+2016-03-17 11:08:53,473:[main                ]:INFO :MeshClient          :Transfer Report:false
+2016-03-17 11:08:53,473:[main                ]:INFO :MeshClient          :Poll Report:false
+2016-03-17 11:08:53,473:[main                ]:INFO :MeshClient          :Save Sent:true
+2016-03-17 11:08:53,473:[main                ]:INFO :MeshClient          :========================================================
+2016-03-17 11:08:53,630:[pool-2-thread-1     ]:INFO :SignalFileMonitor   :Starting SignalFileMonitor
+2016-03-17 11:08:53,636:[pool-3-thread-1     ]:INFO :DailyHouseKeeper    :Starting MESH Client Housekeeping
+2016-03-17 11:08:53,656:[pool-3-thread-1     ]:INFO :DailyHouseKeeper    :Finished MESH Client Housekeeping
+2016-03-17 11:08:53,656:[pool-3-thread-1     ]:INFO :UpdateHouseKeeper   :Performing scheduled check for MESH Client Upgrade
+2016-03-17 11:08:53,656:[pool-3-thread-1     ]:INFO :UpdateHouseKeeper   :Starting MESH Client Update Check
+2016-03-17 11:08:53,683:[pool-1-thread-1     ]:INFO :ServiceManager      :Creating Token Pool
+2016-03-17 11:08:54,348:[pool-3-thread-1     ]:INFO :UpdateClientResponseHandler:Client on highest possible version - no upgrade neccesary
+2016-03-17 11:08:54,404:[Mailbox:meshhc3     ]:INFO :AuthenticationService:Successfully Authenticatied Mailbox: meshhc3
+2016-03-17 11:08:54,406:[Mailbox:meshhc3     ]:INFO :SendFilesService    :Sent 0 files for Mailbox:meshhc3
+2016-03-17 11:08:54,406:[Mailbox:meshhc3     ]:INFO :MailboxProcessor    :Sent  0 files for Mailboxmeshhc3.
+2016-03-17 11:08:54,558:[Mailbox:meshhc3     ]:INFO :MailboxProcessor    :Received  0 files for Mailbox:meshhc3.
+```
+**Success**
+
+###(2) Send a test file via MESH
+
+Check MESH `OUT` folder is empty:
+
+```
+$ ls ~/MESH-DATA-HOME/MAILBOX1/OUT
+$
+``` 
+Copy test file to MESH `IN` folder. Note the `.dat` file needs to be copied before the `.ctl` file.
+
+```
+$ cd ~/ciao-poc-kent/mesh
+$ ls
+$ meshhc3CIAO00000001.ctl  meshhc3CIAO00000001.dat  README.md
+$ cp *.dat ~/MESH-DATA-HOME/MAILBOX1/OUT
+$ cp *.ctl ~/MESH-DATA-HOME/MAILBOX1/OUT
+$
+```
+Wait a couple of minutes (the MESH poll interval was set to 1 minute in the configuration file). Check the MESH `OUT` folder is now empty:
+
+```
+$ ls ~/MESH-DATA-HOME/MAILBOX1/OUT
+$
+```
+**Success**
+
+Check the MESH `SENT` folder now contains the file:
+
+```
+$ ls ~/MESH-DATA-HOME/MAILBOX1/SENT
+$ meshhc3CIAO00000001.ctl  meshhc3CIAO00000001.dat
+$
+```
+**Success**
