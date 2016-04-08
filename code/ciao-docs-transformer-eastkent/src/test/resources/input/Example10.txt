@@ -11,6 +11,7 @@
   "NHS No.": "555 555 5555 (Number present and verified)",
   "Hospital No.": "00000005",
   "Address": "5 TEST VIEW\nTT5 5TT",
+  "Allergies" : "No known allergies",
   "dischargeMedicationStaff": {
     "Clinician": "T Test",
     "Designation": "ST2, Child Health, TEST",

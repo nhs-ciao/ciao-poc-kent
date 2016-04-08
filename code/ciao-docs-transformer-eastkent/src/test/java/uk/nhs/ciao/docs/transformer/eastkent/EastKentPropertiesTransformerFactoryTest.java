@@ -16,6 +16,7 @@ import uk.nhs.ciao.docs.transformer.TransformationRecorder;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.io.Closeables;
 
 /**
@@ -61,7 +62,12 @@ public class EastKentPropertiesTransformerFactoryTest {
 		
 		transformation.apply(Mockito.mock(TransformationRecorder.class), actual, actual);
 
-		System.out.println("Actual output for " + name + ":\n" + actual);
+		// Convert output to JSON for debugging
+		final ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		System.out.println("Actual output for " + name + ":\n" + mapper.writeValueAsString(actual));
+		
+		//System.out.println("Actual output for " + name + ":\n" + actual);
 		
 		ReflectionAssert.assertReflectionEquals(expected, actual);
 	}

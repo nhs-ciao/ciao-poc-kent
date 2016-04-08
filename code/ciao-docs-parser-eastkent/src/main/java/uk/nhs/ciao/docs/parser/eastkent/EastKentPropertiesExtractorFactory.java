@@ -109,9 +109,9 @@ public class EastKentPropertiesExtractorFactory {
 		patientDetailsSplitter.addSelection(new XPathNodeSelector(xpath, "(./tbody/tr/td/table)[3]/tbody/tr/td"),
 				new PropertyTableExtractor(WhitespaceMode.TRIM));
 		
-		splitter.addSelection(new XPathNodeSelector(xpath, "/html/body/table[descendant::td[text()='Allergies']]/*/tr/td"),
-				new PropertyTableExtractor());
-		// TODO: Currently there is no example document with a completed Allergies section
+		splitter.addSelection(new XPathNodeSelector(xpath, "/html/body/table[descendant::td[text()='Allergies']]/*/tr[position()>1]/td"),
+				new SinglePropertyExtractor("Allergies", ValueMode.SINGLE_VALUE));
+		// Note: Currently there is no example document with a completed Allergies section, so this parsing rule may need to change
 		
 		final SplitterPropertiesExtractor dischargeMedicationSplitter = new SplitterPropertiesExtractor();
 		splitter.addSelection(new XPathNodeSelector(xpath, "/html/body/table[descendant::td[text()='Medication on Discharge']]"),

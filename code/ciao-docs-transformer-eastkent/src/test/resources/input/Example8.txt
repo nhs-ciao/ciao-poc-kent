@@ -11,6 +11,7 @@
   "NHS No.": "333 333 3333 (Number present and verified)",
   "Hospital No.": "333333",
   "Address": "3 TEST \n            GARDENS\nTT3 3TT",
+  "Allergies" : "No known allergies",
   "dischargeMedicationStaff": {
     "Clinician": "T Test",
     "Designation": "Medicine Test",

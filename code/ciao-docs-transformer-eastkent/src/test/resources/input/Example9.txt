@@ -15,6 +15,7 @@
   "NHS No.": "444 444 4444 (Number present and verified)",
   "Hospital No.": "000004",
   "Address": "4 TEST \n            ROAD\nTT4 4TT",
+  "Allergies" : "No known allergies",
   "dischargeMedicationStaff": {
     "Clinician": "T Test",
     "Designation": "F1, TEST",
