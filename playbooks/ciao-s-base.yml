@@ -71,34 +71,64 @@
     - name: Install service configurations for host in the CIAO cloud
       template: src=templates/service.cfg.j2 dest={{ nagios_config_services_directory }}/{{ inventory_hostname }}.cfg
 
-- name: Deploy ELK
+- name: Deploy Elasticsearch
   hosts: all
   become: True
   vars:
-    logstash_config_directory: "/opt/ciao_logstash/conf"
-    elastic_data_directory: "/opt/ciao_elastic/data" 
+    elasticsearch_data_directory: "/opt/ciao_elasticsearch/data" 
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Create Elasticsearch data directory
+      file: path={{ elasticsearch_data_directory }} state=directory
+    - name: Install Elasticsearch
+      docker:
+        name: ciao-elasticsearch
+        image: elasticsearch
+        state: "{{ docker_state }}"
+        restart_policy: always
+        ports:
+        - "{{ elasticsearch_port }}:9200"
+        volumes:
+        - "{{ elasticsearch_data_directory }}:/usr/share/elasticsearch/data"
+
+- name: Deploy Logstash
+  hosts: all
+  become: True
+  vars:
+    logstash_config_directory: "/opt/ciao_logstash/conf" 
   vars_files:
     - ciao-s-base-vars.yml
   tasks:
     - name: Create Logstash configuration directory
       file: path={{ logstash_config_directory }} state=directory
-    - name: Create Elastic data directory
-      file: path={{ elastic_data_directory }} state=directory
     - name: Install Logstash configuration file
       template: src=templates/logstash.conf.j2 dest={{ logstash_config_directory }}/logstash.conf
-    - name: Install ELK stack
+    - name: Install Logstash
       docker:
-        name: ciao-elk
-        image: hscic/ciao-elk
+        name: ciao-logstash
+        image: logstash
         state: "{{ docker_state }}"
         restart_policy: always
         ports:
-        - "{{ kibana_port }}:80"
         - "{{ logstash_port }}:514"
-        - "{{ elastic_port }}:9200"
         volumes:
-        - "{{ logstash_config_directory }}:/etc/logstash"
-        - "{{ elastic_data_directory }}:/data"
+        - "{{ logstash_config_directory }}:/config-dir"
+
+- name: Deploy Kibana
+  hosts: all
+  become: True
+  vars_files:
+    - ciao-s-base-vars.yml
+  tasks:
+    - name: Install Kibana
+      docker:
+        name: ciao-kibana
+        image: kibana
+        state: "{{ docker_state }}"
+        restart_policy: always
+        ports:
+        - "{{ kibana_port }}:5601"
 
 - name: Deploy Nagios service configurations for monitoring ELK
   hosts: all
@@ -108,8 +138,8 @@
   tasks:
     - name: Install service configurations for host running logstash
       template: src=templates/logstash.cfg.j2 dest={{ nagios_config_services_directory }}/{{ inventory_hostname }}-logstash.cfg
-    - name: Install service configurations for host running elastic
-      template: src=templates/elastic.cfg.j2 dest={{ nagios_config_services_directory }}/{{ inventory_hostname }}-elastic.cfg
+    - name: Install service configurations for host running elasticsearch
+      template: src=templates/elasticsearch.cfg.j2 dest={{ nagios_config_services_directory }}/{{ inventory_hostname }}-elasticsearch.cfg
     - name: Install service configurations for host running kibana
       template: src=templates/kibana.cfg.j2 dest={{ nagios_config_services_directory }}/{{ inventory_hostname }}-kibana.cfg
 
