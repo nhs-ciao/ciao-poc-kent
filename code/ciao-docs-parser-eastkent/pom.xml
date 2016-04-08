@@ -5,21 +5,20 @@
     <artifactId>ciao-docs-parser-parent</artifactId>
     <version>0.1</version>
   </parent>
-  <groupId>uk.nhs.ciao</groupId>
   <artifactId>ciao-docs-parser-eastkent</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <name>ciao-docs-parser-eastkent</name>
+  <version>0.0.1-SNAPSHOT</version>
   <description>A parser for the East Kent eDischarge documents</description>
   <dependencies>
 		<dependency>
 			<groupId>uk.nhs.ciao</groupId>
 			<artifactId>ciao-docs-parser-core</artifactId>
-			<version>0.1</version>
+			<version>${ciao.core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>uk.nhs.ciao</groupId>
 			<artifactId>ciao-docs-parser-model</artifactId>
-			<version>0.1</version>
+			<version>${ciao.core.version}</version>
 		</dependency>
   </dependencies>
 </project>
