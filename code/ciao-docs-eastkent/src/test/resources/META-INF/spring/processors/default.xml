@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+	
+	<!-- NOOP for now -->
+	<!-- Define any processor beans here -->
+	<bean id="processor" class="uk.nhs.ciao.cda.builder.processor.JsonToCDADocumentTransformer">
+		<constructor-arg ref="objectMapper" />
+		
+		<property name="payloadHandlers">
+			<list>
+				<bean class="uk.nhs.ciao.cda.builder.processor.TransferOfCarePayloadHandler" />
+			</list>
+		</property>
+		
+		<!-- For now fall-back to using the transfer of care handler -->
+		<property name="defaultPayloadHandler">
+			<bean class="uk.nhs.ciao.cda.builder.processor.TransferOfCarePayloadHandler" />
+		</property>
+	</bean>
+</beans>

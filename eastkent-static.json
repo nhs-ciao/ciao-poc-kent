@@ -1,17 +1,16 @@
 {
         "documentTitle": "Discharge Summary",
-        "careSetting": "Urology",
-        "custodianODSCode": "RJZ",
-        "custodianOrganisationName": "KING'S COLLEGE HOSPITAL NHS FOUNDATION TRUST",
-        "patientLocalIDAssigningAuthority": "RJZ:KING'S COLLEGE HOSPITAL NHS FOUNDATION TRUST",
-        "patientNHSNoIsTraced": true,
+        "careSetting": "General medicine",
+        "custodianODSCode": "RVV",
+        "custodianOrganisationName": "EAST KENT HOSPITALS UNIVERSITY NHS FOUNDATION TRUST",
+        "patientLocalIDAssigningAuthority": "RVV:EAST KENT HOSPITALS UNIVERSITY NHS FOUNDATION TRUST",
 
-        "documentAuthorOrganisationODSID": "RJZ",
-        "documentAuthorOrganisationName": "KING'S COLLEGE HOSPITAL NHS FOUNDATION TRUST",
-        "medicationsPharmacistScreeningAuthorOrgName": "KING'S COLLEGE HOSPITAL NHS FOUNDATION TRUST",
-        "medicationsPharmacistScreeningAuthorODSCode": "RJZ",
+        "documentAuthorOrganisationODSID": "RVV",
+        "documentAuthorOrganisationName": "EAST KENT HOSPITALS UNIVERSITY NHS FOUNDATION TRUST",
 
-        "patientGender": "female",
+        "medicationsAuthorOrgName": "EAST KENT HOSPITALS UNIVERSITY NHS FOUNDATION TRUST",
+        "medicationsAuthorODSCode": "RVV",
+
         "recipientFullName": "The Jenner Practice",
         "recipientOrganisationName": "The Jenner Practice",
         "recipientODSCode": "RHM",

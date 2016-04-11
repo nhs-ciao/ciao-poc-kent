@@ -1,0 +1,513 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 6.00.3790.4605" name=GENERATOR></HEAD>
+<BODY>
+<STYLE media=all>BODY {
+	FONT-SIZE: 9pt; FONT-FAMILY: arial, verdana, helvetica; BACKGROUND-COLOR: #ffffff
+}
+TABLE {
+	BORDER-RIGHT: 0px; BORDER-TOP: 0px; FONT-SIZE: 9pt; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px
+}
+TABLE.bordered {
+	BORDER-RIGHT: #000 1px solid; BORDER-TOP: #000 1px solid; BORDER-LEFT: #000 1px solid; WIDTH: 95%; BORDER-BOTTOM: #000 1px solid; BORDER-COLLAPSE: collapse
+}
+TABLE.container {
+	BORDER-RIGHT: 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px; WIDTH: 95%; BORDER-BOTTOM: 0px
+}
+TR.head {
+	FONT-WEIGHT: bold; FONT-SIZE: 9pt; VERTICAL-ALIGN: bottom; COLOR: #000000; FONT-FAMILY: arial, helvetica, verdana; BACKGROUND-COLOR: #f0f0ff
+}
+TD {
+	BORDER-TOP-WIDTH: 0pt; PADDING-RIGHT: 0pt; PADDING-LEFT: 0pt; BORDER-LEFT-WIDTH: 0pt; BORDER-BOTTOM-WIDTH: 0pt; PADDING-BOTTOM: 0pt; MARGIN: 0pt; VERTICAL-ALIGN: top; PADDING-TOP: 0pt; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 0pt
+}
+TABLE.bordered TD {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; PADDING-BOTTOM: 2pt; PADDING-TOP: 2pt
+}
+TD.leftAlign {
+	PADDING-RIGHT: 0pt; PADDING-LEFT: 0pt; PADDING-BOTTOM: 0pt; VERTICAL-ALIGN: top; PADDING-TOP: 0pt; TEXT-ALIGN: left
+}
+TD.midAlign {
+	VERTICAL-ALIGN: top; TEXT-ALIGN: center
+}
+TD.rightAlign {
+	VERTICAL-ALIGN: top; TEXT-ALIGN: right
+}
+TD.head {
+	FONT-WEIGHT: bold; FONT-SIZE: 9pt; VERTICAL-ALIGN: bottom; COLOR: #000000; FONT-FAMILY: arial, helvetica, verdana; BACKGROUND-COLOR: #e0e0ff; TEXT-ALIGN: center
+}
+TD.drug {
+	FONT-SIZE: 9pt
+}
+TD.drugTitle {
+	FONT-WEIGHT: bold; FONT-SIZE: 9pt; BACKGROUND-COLOR: #cccccc
+}
+TD.nhsLogo {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 2px; FONT-WEIGHT: bold; FONT-SIZE: 14pt; PADDING-BOTTOM: 0px; COLOR: #ffffff; PADDING-TOP: 0px; FONT-STYLE: italic; FONT-FAMILY: Verdana, Arial; LETTER-SPACING: -2px; BACKGROUND-COLOR: #10498c; TEXT-ALIGN: center; font-stretch: extra-expanded
+}
+TABLE.container TD {
+	BORDER-TOP-WIDTH: 0pt; PADDING-RIGHT: 0pt; PADDING-LEFT: 0pt; BORDER-LEFT-WIDTH: 0pt; BORDER-BOTTOM-WIDTH: 0pt; PADDING-BOTTOM: 0pt; MARGIN: 0pt; VERTICAL-ALIGN: top; PADDING-TOP: 0pt; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 0pt
+}
+.setNameEDN {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; FONT-WEIGHT: bold; FONT-SIZE: 11pt; PADDING-BOTTOM: 2pt; VERTICAL-ALIGN: top; PADDING-TOP: 2pt; WHITE-SPACE: nowrap; TEXT-ALIGN: left
+}
+.settingNameEDN {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; FONT-WEIGHT: bold; FONT-SIZE: 8pt; PADDING-BOTTOM: 2pt; VERTICAL-ALIGN: top; PADDING-TOP: 2pt; WHITE-SPACE: nowrap; TEXT-ALIGN: left
+}
+.settingNameEDNLeft {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; FONT-WEIGHT: bold; FONT-SIZE: 8pt; PADDING-BOTTOM: 2pt; VERTICAL-ALIGN: top; PADDING-TOP: 2pt; WHITE-SPACE: nowrap; TEXT-ALIGN: left
+}
+.settingValueEDN {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; PADDING-BOTTOM: 2pt; VERTICAL-ALIGN: middle; PADDING-TOP: 2pt; TEXT-ALIGN: left
+}
+.settingCommentEDN {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; PADDING-BOTTOM: 2pt; VERTICAL-ALIGN: middle; PADDING-TOP: 2pt; TEXT-ALIGN: left
+}
+.settingLabelEDN {
+	PADDING-RIGHT: 2pt; PADDING-LEFT: 2pt; PADDING-BOTTOM: 2pt; VERTICAL-ALIGN: middle; PADDING-TOP: 2pt; FONT-STYLE: italic; TEXT-ALIGN: left
+}
+.PRStatusTable {
+	BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; BORDER-BOTTOM: #000000 1px solid
+}
+.PRPharmacyHead {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; MARGIN: 0px; COLOR: #000000; FONT-FAMILY: verdana, arial, helvetica; BACKGROUND-COLOR: #cccccc
+}
+TD.PRsign {
+	BORDER-RIGHT: #cccccc 1px solid; HEIGHT: 40px
+}
+</STYLE>
+
+<STYLE media=all>.allergyRedAlert {
+	FONT-WEIGHT: bold; COLOR: #cc0000
+}
+TR.allergyRedAlert TD {
+	FONT-SIZE: 12pt
+}
+.allergyGreenAlert {
+	FONT-WEIGHT: bold; COLOR: #000000
+}
+TR.allergyGreenAlert TD {
+	FONT-SIZE: 12pt
+}
+</STYLE>
+
+
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD class=rightAlign width="100%">
+      <TABLE id=Table8 cellSpacing=0 cellPadding=0 border=0>
+        <TBODY>
+        <TR>
+          <TD style="VERTICAL-ALIGN: bottom; TEXT-ALIGN: right" 
+            vAlign=bottom><FONT style="FONT-WEIGHT: bold; FONT-SIZE: 11pt">Test NHS Foundation Trust&nbsp;</FONT> </TD>
+          <TD class=nhsLogo width=45>NHS</TD></TR>
+        <TR>
+          <TD class=rightAlign><FONT 
+            style="FONT-WEIGHT: bold; FONT-SIZE: 11pt; COLOR: #10498c">&nbsp;</FONT> 
+          </TD>
+          <TD></TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TD colSpan=2>
+      <DIV 
+  style="WIDTH: 100%; BORDER-BOTTOM: #10498c 2px solid"></DIV></TD></TR></TBODY></TABLE>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD width="35%">
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD style="FONT-SIZE: 10pt" width="100%">TEST MEDICAL CENTRE<BR>TT0 0TT </TD></TR></TBODY></TABLE></TD>
+    <TD width="65%">
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD style="FONT-SIZE: 10pt; TEXT-ALIGN: right"><EM>Ward Tel:</EM> 
+            01111 222333</TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 10pt; TEXT-ALIGN: right"><EM>Date:</EM> 
+            09/06/2015 11:22:33</TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 10pt; TEXT-ALIGN: right"><EM>Discharge 
+            Id:</EM> 2222222</TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TD><BR></TD></TR>
+  <TR>
+    <TD style="FONT-SIZE: 10pt">Dear Dr T TEST</TD></TR>
+  <TR>
+    <TD><BR></TD></TR></TBODY></TABLE>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD style="TEXT-ALIGN: center"><STRONG><FONT size=3>Discharge 
+      Notification</FONT></STRONG></TD></TR>
+  <TR>
+    <TD><BR></TD></TR>
+  <TR>
+    <TD style="FONT-SIZE: 9pt">This patient was a day case patient under the 
+      care of MR T TESTER (Specialty: VASCULAR SURGERY (107)) on Test Ward at 
+      Test Hospital on 09/06/2015. The patient was discharged on 
+      13/06/2015 .</TD></TR>
+  <TR>
+    <TD><BR></TD></TR></TBODY></TABLE>
+<TABLE class=container>
+  <TBODY>
+  <TR>
+    <TD width="5%">
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap><EM>Patient:</EM></TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap><EM>D.O.B.:</EM></TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap><EM>NHS No.:</EM></TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap><EM>Hospital 
+        No.:</EM></TD></TR></TBODY></TABLE></TD>
+    <TD align=left>
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap><B>MRS TEST TEST-TWO</B></TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap>02/02/1949</TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap>222 222 2222 (Number present and 
+            verified) &nbsp; </TD></TR>
+        <TR>
+          <TD style="FONT-SIZE: 9pt" noWrap>000002</TD></TR></TBODY></TABLE></TD>
+    <TD width="65%">
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD 
+            style="FONT-SIZE: 9pt; TEXT-ALIGN: right"><EM>Address:&nbsp;&nbsp;</EM></TD>
+          <TD style="FONT-SIZE: 9pt">2 TEST ROAD<BR>TT2 2TT</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<HR>
+
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD class=setNameEDN>Medicines Reconcilation </TD></TR>
+  <TR>
+    <TD class=leftAlign width="100%">
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD class=settingValueEDN width="35%"><B>Medicines reconcilation 
+            completed by pharmacy staff</B></TD>
+          <TD class=settingNameEDN width="5%">Name:</TD>
+          <TD class=settingValueEDN width="15%">T Test</TD>
+          <TD class=settingNameEDN width="5%">Position:</TD>
+          <TD class=settingValueEDN width="15%">Technician</TD>
+          <TD class=settingNameEDN width="5%">Date:</TD>
+          <TD class=settingValueEDN width="10%">10/06/2015</TD>
+          <TD class=settingValueEDN 
+  width="10%"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<P><BR></P>
+<TABLE id=Table2>
+  <TBODY>
+  <TR>
+    <TD class=setNameEDN>Allergies </TD></TR>
+  <TR class=allergyGreenAlert>
+    <TD class=settingValueEDN width="100%">No known 
+allergies</TD></TR></TBODY></TABLE>
+<P><BR></P>
+<TABLE id=Table5>
+  <TBODY>
+  <TR>
+    <TD class=setNameEDN>Medication on Discharge </TD></TR>
+  <TR>
+    <TD class=leftAlign width="100%">
+      <TABLE id=Table3>
+        <TBODY>
+        <TR>
+          <TD class=settingNameEDN width="15%">Clinician:</TD>
+          <TD class=settingValueEDN width="15%">Test Tester</TD>
+          <TD class=settingNameEDN width="10%">Designation:</TD>
+          <TD class=settingValueEDN width="10%">F1 Doctor</TD>
+          <TD class=settingNameEDN width="5%">Date:</TD>
+          <TD class=settingValueEDN width="15%">13/06/2015 12:34 </TD>
+          <TD class=settingNameEDN width="10%">Bleep/Ext No.:</TD>
+          <TD class=settingValueEDN width="10%">4321</TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TD class=leftAlign width="100%">
+      <TABLE class=bordered>
+        <TBODY>
+        <TR>
+          <TD class=drugTitle>Drug</TD>
+          <TD class=drugTitle>Dose</TD>
+          <TD class=drugTitle>Frequency</TD>
+          <TD class=drugTitle>Route</TD>
+          <TD class=drugTitle>Duration</TD>
+          <TD class=drugTitle>Supply</TD>
+          <TD class=drugTitle align=middle>GP<BR>continue?</TD>
+          <TD class=drugTitle></TD></TR></TBODY>
+        <TBODY>
+        <TR>
+          <TD>Baclofen tablets </TD>
+          <TD>10mg&nbsp; </TD>
+          <TD>Three times a day&nbsp; </TD>
+          <TD>oral&nbsp; </TD>
+          <TD align=middle>Ongoing&nbsp; </TD>
+          <TD align=middle>POD&nbsp; </TD>
+          <TD align=middle>Yes&nbsp; </TD>
+          <TD align=middle><B></B></TD></TR>
+        <TR class="drugline drugbottom">
+          <TD colSpan=8></TD></TR>
+        <TR height=5>
+          <TD colSpan=8>
+            <HR>
+          </TD></TR>
+        <TBODY>
+        <TR>
+          <TD>Gabapentin capsules </TD>
+          <TD>100mg&nbsp; </TD>
+          <TD>three times a day&nbsp; </TD>
+          <TD>oral&nbsp; </TD>
+          <TD align=middle>Ongoing&nbsp; </TD>
+          <TD align=middle>POD&nbsp; </TD>
+          <TD align=middle>Yes&nbsp; </TD>
+          <TD align=middle><B></B></TD></TR>
+        <TR class="drugline drugbottom">
+          <TD colSpan=8></TD></TR>
+        <TR height=5>
+          <TD colSpan=8>
+            <HR>
+          </TD></TR>
+        <TBODY>
+        <TR>
+          <TD>Adcal D3 chewable (calcium carbonate 1.5g /colecalciferol 400 
+            Units) tablets </TD>
+          <TD>1 tablet&nbsp; </TD>
+          <TD>Twice a day&nbsp; </TD>
+          <TD>oral&nbsp; </TD>
+          <TD align=middle>Ongoing&nbsp; </TD>
+          <TD align=middle>POD&nbsp; </TD>
+          <TD align=middle>Yes&nbsp; </TD>
+          <TD align=middle><B></B></TD></TR>
+        <TR class="drugline drugbottom">
+          <TD colSpan=8>&nbsp;&nbsp;Primary care should repeat supply calcium 
+            and vitamin D supplement of their choice </TD></TR>
+        <TR height=5>
+          <TD colSpan=8>
+            <HR>
+          </TD></TR>
+        <TBODY>
+        <TR>
+          <TD>Celecoxib capsules </TD>
+          <TD>100mg&nbsp; </TD>
+          <TD>Once a day&nbsp; </TD>
+          <TD>oral&nbsp; </TD>
+          <TD align=middle>Ongoing&nbsp; </TD>
+          <TD align=middle>POD&nbsp; </TD>
+          <TD align=middle>Yes&nbsp; </TD>
+          <TD align=middle><B></B></TD></TR>
+        <TR class="drugline drugbottom">
+          <TD colSpan=8></TD></TR>
+        <TR height=5>
+          <TD colSpan=8>
+            <HR>
+          </TD></TR>
+        <TBODY>
+        <TR>
+          <TD>Aspirin dispersible tablets </TD>
+          <TD>75mg&nbsp; </TD>
+          <TD>Every morning&nbsp; </TD>
+          <TD>oral&nbsp; </TD>
+          <TD align=middle>Ongoing&nbsp; </TD>
+          <TD align=middle>POD&nbsp; </TD>
+          <TD align=middle>Yes&nbsp; </TD>
+          <TD align=middle><B></B></TD></TR>
+        <TR class="drugline drugbottom">
+          <TD colSpan=8></TD></TR>
+        <TR height=5>
+          <TD colSpan=8>
+            <HR>
+          </TD></TR>
+        <TBODY>
+        <TR>
+          <TD>Beclometasone 100 micrograms/dose (as Clenil Modulite) inhaler 
+          </TD>
+          <TD>2 puffs&nbsp; </TD>
+          <TD>twice a day&nbsp; </TD>
+          <TD>inhaler&nbsp; </TD>
+          <TD align=middle>Ongoing&nbsp; </TD>
+          <TD align=middle>POD&nbsp; </TD>
+          <TD align=middle>Yes&nbsp; </TD>
+          <TD align=middle><B></B></TD></TR>
+        <TR class="drugline drugbottom">
+          <TD colSpan=8></TD></TR>
+        <TR height=5>
+          <TD colSpan=8>
+            <HR>
+          </TD></TR>
+        <TBODY>
+        <TR>
+          <TD>Lansoprazole capsules </TD>
+          <TD>30mg&nbsp; </TD>
+          <TD>every morning&nbsp; </TD>
+          <TD>oral&nbsp; </TD>
+          <TD align=middle>Ongoing&nbsp; </TD>
+          <TD align=middle>POD&nbsp; </TD>
+          <TD align=middle>Yes&nbsp; </TD>
+          <TD align=middle><B></B></TD></TR>
+        <TR class="drugline drugbottom">
+          <TD colSpan=8></TD></TR>
+        <TR height=5>
+          <TD colSpan=8>
+            <HR>
+          </TD></TR>
+        <TBODY>
+        <TR>
+          <TD>Amitriptyline tablets </TD>
+          <TD>75mg&nbsp; </TD>
+          <TD>at night&nbsp; </TD>
+          <TD>oral&nbsp; </TD>
+          <TD align=middle>Ongoing&nbsp; </TD>
+          <TD align=middle>POD&nbsp; </TD>
+          <TD align=middle>To be reviewed&nbsp; </TD>
+          <TD align=middle><B></B></TD></TR>
+        <TR class="drugline drugbottom">
+          <TD colSpan=8></TD></TR>
+        <TR height=5>
+          <TD colSpan=8>
+            <HR>
+          </TD></TR>
+        <TBODY>
+        <TR>
+          <TD>Ferrous fuMARate tablets </TD>
+          <TD>305mg&nbsp; </TD>
+          <TD>Once a day&nbsp; </TD>
+          <TD>oral&nbsp; </TD>
+          <TD align=middle>Ongoing&nbsp; </TD>
+          <TD align=middle>Pharmacy&nbsp; </TD>
+          <TD align=middle>Yes&nbsp; </TD>
+          <TD align=middle><B></B></TD></TR>
+        <TR class="drugline drugbottom">
+          <TD colSpan=8></TD></TR>
+        <TR height=5>
+          <TD colSpan=8>
+            <HR>
+          </TD></TR>
+        <TBODY>
+        <TR>
+          <TD>Folic acid tablets </TD>
+          <TD>5mg&nbsp; </TD>
+          <TD>Every morning&nbsp; </TD>
+          <TD>oral&nbsp; </TD>
+          <TD align=middle>Ongoing&nbsp; </TD>
+          <TD align=middle>Pharmacy&nbsp; </TD>
+          <TD align=middle>Yes&nbsp; </TD>
+          <TD align=middle><B></B></TD></TR>
+        <TR class="drugline drugbottom">
+          <TD colSpan=8></TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TD class=leftAlign width="100%">
+      <TABLE id=Table6>
+        <TBODY>
+        <TR>
+          <TD class=settingNameEDN width="25%">Editing Pharmacist:</TD>
+          <TD class=settingValueEDN width="15%">Test Pharm</TD>
+          <TD class=settingNameEDN width="5%">Date:</TD>
+          <TD class=settingValueEDN width="55%">13/06/2015 12:34 
+      </TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TD class=leftAlign width="100%">
+      <TABLE id=Table12>
+        <TBODY>
+        <TR>
+          <TD class=settingNameEDN width="25%">Prescription Authorised By:</TD>
+          <TD class=settingValueEDN width="15%">Test Pharm</TD>
+          <TD class=settingNameEDN width="5%">Date:</TD>
+          <TD class=settingValueEDN width="55%">13/06/2015 
+      12:33</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<HR>
+
+<TABLE id=Table1 border=0 xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+  <TBODY>
+  <TR>
+    <TD class=setNameEDN>Clinical Assessment</TD></TR>
+  <TR>
+    <TD class=settingNameEDN width="40%"></TD>
+    <TD class=settingValueEDN width="60%"></TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Mode of Admission: </TD>
+    <TD class=settingValueEDN>Emergency</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Presenting Complaint: </TD>
+    <TD class=settingValueEDN>Mrs Test-Two was seen in the vascular nurse 
+      clinic at Test via an urgent referral from her podiatry clinic. She has a 
+      4-6 week history of ulceration of the 4th adn 5th toes of the left foot. 
+      Constant pain in the toes.<BR><BR>Discussed at clinic with Mr Test 
+      (Vascular Surgeon) who advised admission to Test Hospital 
+      for prostacyclin infusion (Flolan) to try to improve blood flow to the 
+      foot, and a foot x-ray to investigate for any osteomyelitis (infection in 
+      the bone).</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Chronic Diagnoses: </TD>
+    <TD class=settingValueEDN>Rheumatoid arthritis, anaemia</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Comorbidities: </TD>
+    <TD class=settingValueEDN>Asthma</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Procedure 1: </TD>
+    <TD class=settingValueEDN>N/A </TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Clinical Details: </TD>
+    <TD class=settingValueEDN>Foot x-ray - inconclusive for osteomyelitis. No 
+      further imaging requested as clinically no osteomyelitis present. 
+      Superficial infection.</TD></TR></TBODY></TABLE>
+<HR xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<!--empty-->
+<TABLE id=Table17>
+  <TBODY>
+  <TR>
+    <TD class=setNameEDN>Notes </TD></TR>
+  <TR>
+    <TD class=settingValueEDN width="100%">
+      <P align=left>Bloods: </P>
+      <P align=left>Hb 97 WCC 7.3 Plt 292 Na 136 K 3.9 Creat 38 CRP 57</P>
+      <P align=left>B12 472 Folate 3.3 Ferritin 18 Iron 3.1 TSAT 5 Transferrin 
+      2.31</P>
+      <P>&nbsp;</P>
+      <P>&nbsp;</P>
+      <P>Mrs Test-Two was noted to have low iron and folate levels. Her usual 
+      ferrous fumarate was therefore increased from every other day to daily and 
+      folic acid started. Could GP please repeat FBC and haematinics in the next 
+      few weeks to monitor response</P></TD></TR></TBODY></TABLE>
+<HR>
+
+<TABLE id=Table1 border=0 xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+  <TBODY>
+  <TR>
+    <TD class=setNameEDN>Management</TD></TR>
+  <TR>
+    <TD class=settingNameEDN width="40%"></TD>
+    <TD class=settingValueEDN width="60%"></TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Has the Patient given consent to view their 
+      Summary Care Record?: </TD>
+    <TD class=settingValueEDN>No</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Discharge Destination: </TD>
+    <TD class=settingValueEDN>Own home</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Information Given to Patient: </TD>
+    <TD class=settingValueEDN>Mrs Test-Two was informed about her admission as 
+      per this discharge letter. She will receive a letter in the post with 
+      details of her follow-up appointment with Mr Test.<BR>Please seek help 
+      if you are concerned about the wound - if there is increased pain, 
+      redness, breakdown of the skin, size of the wound or discharge from the 
+      wound.</TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Hospital OP Appointment Booked: </TD>
+    <TD class=settingValueEDN>Appt Required </TD></TR>
+  <TR>
+    <TD class=settingNameEDN>Appointment Details: </TD>
+    <TD class=settingValueEDN>2 weeks with Mr Test</TD></TR></TBODY></TABLE>
+<HR xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+
+<P align=left><BR></P></BODY></HTML>

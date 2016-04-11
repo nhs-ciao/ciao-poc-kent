@@ -1,0 +1,96 @@
+{
+  "trustName": "Test NHS Foundation Trust",
+  "amendedVersion": {
+    "Reason": "Correction",
+    "Date": "2015-06-13 17:51"
+  },
+  "hospitalName": [
+    "TEST MEDICAL CENTRE",
+    "TT0 0TT"
+  ],
+  "Ward Tel": "01111 222333",
+  "Date": "2015-06-13 17:55:56",
+  "Discharge Id": "4444444",
+  "gpName": "Dr T TEST",
+  "dischargeSummary": "This patient was an inpatient under the care of DR T TESTER (Specialty: GENERAL SURGERY (100)) on Test at test Hospital on 12/06/2015. The patient was discharged on 13/06/2015 .",
+  "Patient": "MISS TEST TEST-FOUR",
+  "D.O.B.": "1993-04-04",
+  "NHS No.": "444 444 4444 (Number present and verified)",
+  "Hospital No.": "000004",
+  "Address": [
+    "4 TEST",
+    "ROAD",
+    "TT4 4TT"
+  ],
+  "dischargeMedicationStaff": {
+    "Clinician": "T Test",
+    "Designation": "F1, TEST",
+    "Date": "2015-06-13 17:52",
+    "Bleep/Ext No.": "4444"
+  },
+  "dischargeMedication": [
+    {
+      "Drug": "Co-amoxiclav 500/125 tablets (amoxicillin/clavulanic acid)",
+      "Dose": "1 tablet",
+      "Frequency": "three times a day",
+      "Route": "oral",
+      "Duration": "5 days",
+      "Supply": "TTO Pre-Pack",
+      "GP continue?": "No"
+    },
+    {
+      "Drug": "Paracetamol 500mg tablets",
+      "Dose": "1 to 2 tablets when required for pain",
+      "Frequency": "up to 4 times a day",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "TTO Pre-Pack",
+      "GP continue?": "No"
+    },
+    {
+      "Drug": "buscopan",
+      "Dose": "20mg",
+      "Frequency": "Three times a day",
+      "Route": "Oral",
+      "Duration": "Ongoing",
+      "Supply": "TTO Pre-Pack",
+      "GP continue?": "No"
+    },
+    {
+      "Drug": "Omeprazole capsules",
+      "Dose": "40mg",
+      "Frequency": "Once a day",
+      "Route": "oral",
+      "Duration": "Ongoing",
+      "Supply": "TTO Pre-Pack",
+      "GP continue?": "Yes"
+    },
+    {
+      "Drug": "Enoxaparin (Clexane) subcutaneous injection",
+      "Dose": "40mg",
+      "Frequency": "Once a day",
+      "Route": "sc injection",
+      "Duration": "7 days",
+      "Supply": "TTO Pre-Pack",
+      "GP continue?": "No"
+    }
+  ],
+  "Mode of Admission": "Emergency",
+  "Reason for Admission / History of Presenting Complaint(s)": "Miss Test-Four was admitted with right upper quadrant pain. She is known to have gallstones and is 10 weeks post-partum. She was treated with analgesia and fluids and was taken to theatre for a cholecystectomy. She has made a good recovery and her pain is now controlled. She is ready to be discharged.",
+  "Diagnosis": "Biliary colic",
+  "Operations and Procedures": "Laparoscopic cholecystectomy",
+  "Does this patient have a catheter?": "No",
+  "Discharge Destination": "Own home",
+  "Information Given to Patient and/or Authorised Representative": "Information given to Miss Test-Four as per EDN. If concerned about condition seek medical advice.",
+  "VTE Assessent Completed": "Yes Smoking Cessation",
+  "Patient is a current smoker": "Never Smoked (To be classed as an ex smoker, patients must have abstained for 3 months)",
+  "patientType": "inpatient",
+  "doctorName": "DR T TESTER",
+  "doctorSpeciality": "GENERAL SURGERY (100)",
+  "ward": "Test",
+  "hospital": "test Hospital",
+  "admissionDate": "2015-06-12",
+  "dischargeDate": "2015-06-13",
+  "nhsNumber": "444 444 4444",
+  "nhsNumberVerification": "Number present and verified"
+}
