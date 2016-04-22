@@ -4,7 +4,7 @@ Document Parser Customisation
 This outlines the process for creating a new parser for a specific trusts's eDischarge document format so it can be parsed by CIAO.
 
 * Create a new maven project in Eclipse
-	* artefactid: ciao-docs-parser-eastkent
+	* artefactid: ciao-docs-eastkent
 	* parent groupid: uk.nhs.ciao
 	* parent artefactid: ciao-docs-parser-parent
 	* parent version: 0.1
@@ -55,32 +55,6 @@ Document Transformer Customisation
 
 This outlines the process for creating a new transformer for a specific trusts's eDischarge document data so it maps to the fields needed to create a CDA document.
 
-* Create a new maven project in Eclipse
-	* artefactid: ciao-docs-transformer-eastkent
-	* parent groupid: uk.nhs.ciao
-	* parent artefactid: ciao-docs-transformer-parent
-	* parent version: 0.1
-* Add the following dependencies in the POM
-
-```
-  <dependencies>
-		<dependency>
-			<groupId>uk.nhs.ciao</groupId>
-			<artifactId>ciao-docs-parser-core</artifactId>
-			<version>0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>uk.nhs.ciao</groupId>
-			<artifactId>ciao-docs-parser-model</artifactId>
-			<version>0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>ciao-docs-transformer</artifactId>
-			<version>0.1</version>
-		</dependency>
-  </dependencies>
-```
 
 * Add a package for uk.nhs.ciao.docs.parser.eastkent
 * Add a class: `EastKentPropertiesTransformerFactory`

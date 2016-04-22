@@ -1,4 +1,4 @@
-package uk.nhs.ciao.docs.parser.eastkent;
+package uk.nhs.ciao.docs.transformer.eastkent;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
+import org.apache.camel.Producer;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.model.dataformat.JsonLibrary;
@@ -23,6 +24,7 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import uk.nhs.ciao.camel.CamelApplicationRunner;
 import uk.nhs.ciao.camel.CamelApplicationRunner.AsyncExecution;
+import uk.nhs.ciao.cda.builder.eastkent.EastKentCDABuilderExample;
 import uk.nhs.ciao.configuration.CIAOConfig;
 import uk.nhs.ciao.configuration.impl.MemoryCipProperties;
 import uk.nhs.ciao.docs.parser.DocumentParserApplication;
@@ -35,10 +37,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 
-public class EastKentParserExample {
+public class EastKentTransformerExample {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(EastKentParserExample.class);
-	private static final String CIP_NAME = "ciao-docs-parser";
+	private static final Logger LOGGER = LoggerFactory.getLogger(EastKentCDABuilderExample.class);
+	private static final String CIP_NAME = "ciao-docs-transformer";
 	
 	@Rule
 	public Timeout globalTimeout = Timeout.seconds(30);
@@ -48,16 +50,16 @@ public class EastKentParserExample {
 	private AsyncExecution execution;
 	
 	public static void main(String[] args) throws Exception {
-		EastKentParserExample builder = new EastKentParserExample();
-		builder.setup();
+		EastKentTransformerExample transformer = new EastKentTransformerExample();
+		transformer.setup();
 		System.out.println("##################################");
 		System.out.println("#");
-		System.out.println("# RUNNING CIAO DOCS PARSER");
+		System.out.println("# RUNNING CIAO DOCS TRANSFORMER");
 		System.out.println("#");
 		System.out.println("##################################");
 		
 		System.out.println();
-		builder.startParser();
+		transformer.startTransformer();
 		System.out.println();
 	}
 	
@@ -67,7 +69,7 @@ public class EastKentParserExample {
 		executorService = Executors.newSingleThreadExecutor();
 	}
 	
-	public void startParser() throws Exception {
+	public void startTransformer() throws Exception {
 		
 		runApplication();
 		
@@ -76,21 +78,23 @@ public class EastKentParserExample {
 		camelContext.addRoutes(new RouteBuilder() {			
 			@Override
 			public void configure() throws Exception {
-				from("jms:queue:parsed-documents")
+				from("jms:queue:transformed-documents")
 				.unmarshal().json(JsonLibrary.Jackson, ParsedDocument.class)
 				.to("mock:output");
 			}
 		});
 		
-		//final Producer producer = camelContext.getEndpoint("jms:queue:enriched-documents")
-		//		.createProducer();
+		// Input producer
+		final Producer producer = camelContext.getEndpoint("jms:queue:parsed-eastkent-documents")
+				.createProducer();
 		
 		// Create a mock endpoint to capture the output from this stage, so we can write it to a file
 		final MockEndpoint endpoint = MockEndpoint.resolve(camelContext, "mock:output");
 		endpoint.expectedMessageCount(countTestDocs());
 		
-		// Copy the test docs into the input directory to start parsing them
-		copyTestDocs();
+		// Feed the inputs into Camel
+		
+		//TODO: Do this!
 		
 		MockEndpoint.assertIsSatisfied(10, TimeUnit.SECONDS, endpoint);
 		
@@ -123,25 +127,12 @@ public class EastKentParserExample {
 	}
 	
 	/**
-	 * Copy test input files into the input directory to feed them into the parser
-	 * @throws IOException
-	 */
-	private void copyTestDocs() throws IOException {
-		File sourceDirectory = new File("src/test/resources/testDocuments");
-		for (File source : sourceDirectory.listFiles()) {
-			File target = new File("src/test/resources/input/"+source.getName());
-			FileUtils.copyFile(source, target);
-			System.out.println("Test document copied to: " + target.getAbsolutePath());
-		}
-	}
-	
-	/**
 	 * Count how many test documents we need to process
 	 * @return
 	 * @throws IOException
 	 */
 	private int countTestDocs() throws IOException {
-		File sourceDirectory = new File("src/test/resources/testDocuments");
+		File sourceDirectory = new File("src/test/resources/parsed-actual");
 		return sourceDirectory.listFiles().length;
 	}
 	
