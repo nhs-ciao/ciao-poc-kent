@@ -2,27 +2,31 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>uk.nhs.ciao</groupId>
-    <artifactId>ciao-docs-transformer-parent</artifactId>
+    <artifactId>ciao-parent</artifactId>
     <version>0.1</version>
   </parent>
+  
   <artifactId>ciao-docs-eastkent</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>ciao-docs-eastkent</name>
+  
+  <properties>
+		<ciao-docs-parser.version>0.1</ciao-docs-parser.version>
+		<ciao-docs-transformer.version>0.1</ciao-docs-transformer.version>
+		<ciao-cda-builder.version>0.1</ciao-cda-builder.version>
+		<ciao-docs-enricher.version>0.1</ciao-docs-enricher.version>
+  </properties>
+  
   <dependencies>
   		<dependency>
 			<groupId>uk.nhs.ciao</groupId>
-			<artifactId>ciao-docs-parser-core</artifactId>
-			<version>${ciao.core.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>uk.nhs.ciao</groupId>
-			<artifactId>ciao-docs-parser-model</artifactId>
-			<version>${ciao.core.version}</version>
+			<artifactId>ciao-docs-parser</artifactId>
+			<version>${ciao-docs-parser.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>ciao-docs-transformer</artifactId>
-			<version>${ciao.core.version}</version>
+			<version>${ciao-docs-transformer.version}</version>
 		</dependency>
 		
 		<!-- Testing -->
@@ -47,7 +51,15 @@
 		<dependency>
 			<groupId>uk.nhs.ciao</groupId>
 			<artifactId>ciao-cda-builder</artifactId>
-			<version>${ciao.core.version}</version>
+			<version>${ciao-cda-builder.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>uk.nhs.ciao</groupId>
+			<artifactId>ciao-docs-enricher</artifactId>
+			<version>${ciao-docs-enricher.version}</version>
+			<scope>test</scope>
 		</dependency>
   </dependencies>
 </project>

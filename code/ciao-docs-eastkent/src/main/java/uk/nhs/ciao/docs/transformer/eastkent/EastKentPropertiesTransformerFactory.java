@@ -18,7 +18,7 @@ public class EastKentPropertiesTransformerFactory {
 	/**
 	 * Properties transformer for the electronic discharge notification HTML documents
 	 */
-	public static PropertiesTransformer createEDNTransformer() {
+	public static PropertiesTransformer createEastKentTransformer() {
 		/*
 		 * The top-level properties transformer provides a DSL for creating other types
 		 * of transformation. The transformations are performed in series.

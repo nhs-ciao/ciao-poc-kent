@@ -47,7 +47,7 @@ public class EastKentPropertiesTransformerFactoryExample {
 	
 	private String run(String filename) throws IOException {
 		this.objectMapper = new ObjectMapper();
-		return transformAndAssert(filename, createEDNTransformer());
+		return transformAndAssert(filename, createEastKentTransformer());
 	}
 	
 	private String transformAndAssert(final String name, final PropertiesTransformation transformation) throws IOException {

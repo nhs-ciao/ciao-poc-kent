@@ -33,27 +33,27 @@ public class EastKentPropertiesTransformerFactoryTest {
 	
 	@Test
 	public void testExample6() throws IOException {
-		transformAndAssert("Example6.txt", createEDNTransformer());
+		transformAndAssert("Example6.txt", createEastKentTransformer());
 	}
 	
 	@Test
 	public void testExample7() throws IOException {
-		transformAndAssert("Example7.txt", createEDNTransformer());
+		transformAndAssert("Example7.txt", createEastKentTransformer());
 	}
 	
 	@Test
 	public void testExample8() throws IOException {
-		transformAndAssert("Example8.txt", createEDNTransformer());
+		transformAndAssert("Example8.txt", createEastKentTransformer());
 	}
 	
 	@Test
 	public void testExample9() throws IOException {
-		transformAndAssert("Example9.txt", createEDNTransformer());
+		transformAndAssert("Example9.txt", createEastKentTransformer());
 	}
 	
 	@Test
 	public void testExample10() throws IOException {
-		transformAndAssert("Example10.txt", createEDNTransformer());
+		transformAndAssert("Example10.txt", createEastKentTransformer());
 	}
 	
 	private void transformAndAssert(final String name, final PropertiesTransformation transformation) throws IOException {

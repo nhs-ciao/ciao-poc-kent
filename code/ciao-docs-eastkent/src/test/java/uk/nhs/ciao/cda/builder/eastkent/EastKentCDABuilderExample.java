@@ -151,6 +151,13 @@ public class EastKentCDABuilderExample {
 		sendMessage(producer, inputJSON);
 		
 		MockEndpoint.assertIsSatisfied(10, TimeUnit.SECONDS, endpoint);
+		
+		try {
+			stopApplication();
+		} finally {
+			// Always stop the executor service
+			executorService.shutdownNow();
+		}
 	}
 	
 	private void sendMessage(final Producer producer, final Object body) throws Exception {
@@ -197,5 +204,25 @@ public class EastKentCDABuilderExample {
 		final Resource resource = new ClassPathResource(resourcePath);
 		final Properties properties = PropertiesLoaderUtils.loadProperties(resource);
 		cipProperties.addConfigValues(properties);
+	}
+	
+	private void stopApplication() {
+		if (execution == null) {
+			return;
+		}
+		
+		final CamelContext context = getCamelContext();
+		try {
+			LOGGER.info("About to stop camel application");
+			execution.getRunner().stop();
+			execution.getFuture().get(); // wait for task to complete
+			LOGGER.info("Camel application has stopped");
+		} catch (Exception e) {
+			LOGGER.warn("Exception while trying to stop camel application", e);
+		} finally {
+			if (context != null) {
+				MockEndpoint.resetMocks(context);
+			}
+		}
 	}
 }

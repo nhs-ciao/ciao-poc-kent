@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+	
+	<bean id="tikaParser" class="uk.nhs.ciao.docs.parser.TikaParserFactory" factory-method="createParser" />
+    <bean id="eastkentExtractor" class="uk.nhs.ciao.docs.parser.eastkent.EastKentPropertiesExtractorFactory" factory-method="createEDNExtractor" />
+    
+    <bean id="eastkentProcessor" class="uk.nhs.ciao.docs.parser.DocumentParserProcessor">
+    	<constructor-arg>
+    		<bean class="uk.nhs.ciao.docs.parser.TikaDocumentParser">
+    			<constructor-arg ref="tikaParser" />
+    			<constructor-arg ref="eastkentExtractor" />
+    		</bean>
+    	</constructor-arg>
+    </bean>
+</beans>
