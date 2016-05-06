@@ -24,12 +24,10 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import uk.nhs.ciao.camel.CamelApplicationRunner;
 import uk.nhs.ciao.camel.CamelApplicationRunner.AsyncExecution;
-import uk.nhs.ciao.cda.builder.eastkent.EastKentCDABuilderExample;
 import uk.nhs.ciao.configuration.CIAOConfig;
 import uk.nhs.ciao.configuration.impl.MemoryCipProperties;
-import uk.nhs.ciao.docs.parser.DocumentParserApplication;
 import uk.nhs.ciao.docs.parser.ParsedDocument;
-import uk.nhs.ciao.util.FileUtils;
+import uk.nhs.ciao.docs.transformer.DocumentTransformerApplication;
 import uk.nhs.interoperability.payloads.util.FileWriter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -39,14 +37,14 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class EastKentTransformerExample {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(EastKentCDABuilderExample.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(EastKentTransformerExample.class);
 	private static final String CIP_NAME = "ciao-docs-transformer";
 	
 	@Rule
 	public Timeout globalTimeout = Timeout.seconds(30);
 	
 	private ExecutorService executorService;
-	private DocumentParserApplication application;
+	private DocumentTransformerApplication application;
 	private AsyncExecution execution;
 	
 	public static void main(String[] args) throws Exception {
@@ -65,7 +63,7 @@ public class EastKentTransformerExample {
 	
 	public void setup() throws IOException {
 		final CIAOConfig ciaoConfig = setupCiaoConfig();
-		application = new DocumentParserApplication(ciaoConfig);
+		application = new DocumentTransformerApplication(ciaoConfig);
 		executorService = Executors.newSingleThreadExecutor();
 	}
 	
@@ -113,7 +111,7 @@ public class EastKentTransformerExample {
 			
 			// Write the results
 			String name = outExchange.getIn().getHeader("camelfilenameonly").toString();
-			String filename = "src/test/resources/parsed-actual/"+name+".xml";
+			String filename = "src/test/resources/parsed-actual/"+name+".json";
 			FileWriter.writeFile(filename, result.getBytes());
 			System.out.println("Wrote output JSON: "+filename);
 		}

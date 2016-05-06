@@ -109,7 +109,7 @@ public class EastKentParserExample {
 			
 			// Write the results
 			String name = outExchange.getIn().getHeader("camelfilenameonly").toString();
-			String filename = "src/test/resources/parsed-actual/"+name+".xml";
+			String filename = "src/test/resources/parsed-actual/"+name+".json";
 			FileWriter.writeFile(filename, result.getBytes());
 			System.out.println("Wrote output JSON: "+filename);
 		}
