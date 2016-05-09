@@ -2,6 +2,7 @@ package uk.nhs.ciao.docs.transformer.eastkent;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
@@ -10,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
+import org.apache.camel.Message;
 import org.apache.camel.Producer;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -28,14 +30,19 @@ import uk.nhs.ciao.configuration.CIAOConfig;
 import uk.nhs.ciao.configuration.impl.MemoryCipProperties;
 import uk.nhs.ciao.docs.parser.ParsedDocument;
 import uk.nhs.ciao.docs.transformer.DocumentTransformerApplication;
+import uk.nhs.ciao.util.FileUtils;
 import uk.nhs.interoperability.payloads.util.FileWriter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.common.io.ByteStreams;
+import com.google.common.io.Closeables;
 
 
 public class EastKentTransformerExample {
+	
+	public static final String APPLICATION_CONTEXT_URI = "META-INF/spring/transformer-beans.xml";
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(EastKentTransformerExample.class);
 	private static final String CIP_NAME = "ciao-docs-transformer";
@@ -63,7 +70,7 @@ public class EastKentTransformerExample {
 	
 	public void setup() throws IOException {
 		final CIAOConfig ciaoConfig = setupCiaoConfig();
-		application = new DocumentTransformerApplication(ciaoConfig);
+		application = new DocumentTransformerTestApplication(APPLICATION_CONTEXT_URI, ciaoConfig);
 		executorService = Executors.newSingleThreadExecutor();
 	}
 	
@@ -91,8 +98,11 @@ public class EastKentTransformerExample {
 		endpoint.expectedMessageCount(countTestDocs());
 		
 		// Feed the inputs into Camel
-		
-		//TODO: Do this!
+		for (File testFile : getTestDocsList()) {
+			String inputJSON = loadTestDoc(testFile);
+			LOGGER.info("Injecting test file: " + testFile.getAbsolutePath());
+			sendMessage(producer, inputJSON);
+		}
 		
 		MockEndpoint.assertIsSatisfied(10, TimeUnit.SECONDS, endpoint);
 		
@@ -134,6 +144,23 @@ public class EastKentTransformerExample {
 		return sourceDirectory.listFiles().length;
 	}
 	
+	private File[] getTestDocsList() throws IOException {
+		File sourceDirectory = new File("src/test/resources/parsed-actual");
+		return sourceDirectory.listFiles();
+	}
+	
+	private String loadTestDoc(File name) throws Exception {
+		return FileUtils.loadFile(name);
+	}
+	
+	private void sendMessage(final Producer producer, final Object body) throws Exception {
+		final Exchange exchange = producer.createExchange();
+		final Message message = exchange.getIn();
+		message.setHeader(Exchange.CORRELATION_ID, "test-correlation-id");
+		message.setBody(body);
+		producer.process(exchange);
+	}
+	
 	/*** The below stuff boot-straps Camel to do the work for us ***/
 	
 	private void runApplication() throws Exception {
@@ -154,6 +181,7 @@ public class EastKentTransformerExample {
 		final MemoryCipProperties cipProperties = new MemoryCipProperties(CIP_NAME, "tests");
 		addProperties(cipProperties, CIP_NAME + ".properties");
 		addProperties(cipProperties, CIP_NAME + "-test.properties");
+		
 		return new CIAOConfig(cipProperties);
 	}
 	
